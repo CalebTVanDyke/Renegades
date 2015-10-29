@@ -1,4 +1,3 @@
-CTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN">
 <HTML>
    <HEAD>
       <TITLE>
