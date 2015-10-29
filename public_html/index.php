@@ -23,7 +23,17 @@
 			<li><a id="home">Leaderboards</a></li>
 			<li><a id="home">Profile</a></li>
 		</ul>
-		<div id="content"></div>
+		<div id="content">
+			<?php
+				include_once ('../resources/sqlconnect.php');
+
+				$sql = new SqlConnect();
+				$result = $sql->runQuery("SHOW TABLES;");
+				while ($row = $result->fetch_assoc()) {
+					print $row["Tables_in_db461rene"] . "<br>";
+				}
+			?>
+		</div>
 	</div>
 </body>
 </html>
