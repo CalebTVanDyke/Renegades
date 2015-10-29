@@ -8,15 +8,25 @@ class SqlConnect {
 	private $password;
 	private $database;
 	private $connUrl;
+	private static $instance;
 
 	/**
 	 * Grab default values
 	 */
-	public function __construct(){
+	protected function __construct(){
 		// Fatal error handler for PHP
 		// ister_shutdown_function("Publisher::fatalHandler");
 		$this->initialize();
 	}
+
+	public static function getInstance()
+    {
+        if (null === SqlConnect::$instance) {
+            SqlConnect::$instance = new SqlConnect();
+        }
+        
+        return SqlConnect::$instance;
+    }
 
 	/**
 	 * Private function so it can't be called whenever

@@ -27,7 +27,7 @@
 			<?php
 				include_once ('../resources/sqlconnect.php');
 
-				$sql = new SqlConnect();
+				$sql = SqlConnect::getInstance();
 				$result = $sql->runQuery("SHOW TABLES;");
 				while ($row = $result->fetch_assoc()) {
 					print $row["Tables_in_db461rene"] . "<br>";
