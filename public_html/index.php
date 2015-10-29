@@ -18,10 +18,10 @@
 		</div>
 		<ul class="nav nav-tabs nav-justified">
 			<li class="active"><a id="home">Home</a></li>
-			<li><a id="home">Games</a></li>
-			<li><a id="home">Tournaments</a></li>
-			<li><a id="home">Leaderboards</a></li>
-			<li><a id="home">Profile</a></li>
+			<li><a id="games">Games</a></li>
+			<li><a id="tournaments">Tournaments</a></li>
+			<li><a id="leaderboards">Leaderboards</a></li>
+			<li><a id="profile">Profile</a></li>
 		</ul>
 		<div id="content">
 			<?php
