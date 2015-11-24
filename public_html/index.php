@@ -1,3 +1,10 @@
+<?php 
+session_start();
+if (!isset($_SESSION["player_tag"]) && !isset($_SESSION["id"])) {
+	header("Location: login.php");
+	exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,8 +39,10 @@
 				while ($row = $result->fetch_assoc()) {
 					print $row["Tables_in_db461rene"] . "<br>";
 				}
+				echo $_SESSION["player_tag"];
 			?>
 		</div>
+		<a href="logout.php"><button type="button" class="btn btn-default">Logout</button></a>
 	</div>
 </body>
 </html>
