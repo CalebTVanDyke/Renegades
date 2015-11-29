@@ -29,8 +29,8 @@ $(document).ready(function() {
 			<h1>Game Renegades</h1>
 		</div>
 		<ul class="nav nav-tabs nav-justified">
-			<li class="active"><a id="home" href="index.php">Home</a></li>
-			<li><a id="games" href="games.php">Games</a></li>
+			<li><a id="home" href="index.php">Home</a></li>
+			<li class="active"><a id="games" href="games.php">Games</a></li>
 			<li><a id="tournaments">Tournaments</a></li>
 			<li><a id="leaderboards">Leaderboards</a></li>
 			<?php 
@@ -44,58 +44,43 @@ $(document).ready(function() {
 				include_once ('../resources/sqlconnect.php');
 
 				$sql = SqlConnect::getInstance();
-				$result = $sql->runQuery("SELECT name, description FROM Game where featured=1;");
-				$count = 0;
+				$result = $sql->runQuery("SELECT name FROM Game where featured=1;");
 				$data = array();
+				$count = 0;
 				while ($row = $result->fetch_assoc()) {
-					array_push($data, array("name" => $row["name"], "description" => $row["description"]));
 					$count++;
+					array_push($data, array("name" => $row["name"]));
+				}
+				$selected = NULL;
+				if (isset($_GET["game"])) {
+					$selected = $_GET["game"];
 				}
 			?>
-			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-				<!-- Indicators -->
-				<ol class="carousel-indicators">
-					<?php 
-						for ($i = 0; $i < $count; $i++) {
-							if ($i == 0) {
-								echo '<li data-target="#carousel-example-generic" data-slide-to="'.$i.'" class="active"></li>';
-							} else {
-								echo '<li data-target="#carousel-example-generic" data-slide-to="'.$i.'"></li>';
+			<div class="row">
+				<div class="col-md-4">
+					<ul class="nav nav-pills">
+						<?php 
+							for ($i = 0; $i < $count; $i++) {
+								if (($i == 0 && $selected == NULL) || $data[$i]['name'] == $selected) {
+									echo '<li role="presentation" class="active"><a href="games.php?game=' . $data[$i]['name'] . '">' . $data[$i]['name'] . '</a></li>';
+									$selected = $data[$i]['name'];
+								} else {
+									echo '<li role="presentation"><a href="games.php?game=' . $data[$i]['name'] . '">' . $data[$i]['name'] . '</a></li>';
+								}
 							}
-						}
-					?>
-				</ol>
-
-				<!-- Wrapper for slides -->
-				<div class="carousel-inner" role="listbox">
-					<?php 
-						$i = 0;
-						foreach ($data as $item) {
-							if ($i == 0) {
-								echo '<div class="item active">';
-							} else {
-								echo '<div class="item">';
-							}
-							echo '<img src="../resources/game_images/'.$item["name"].'.jpg" alt="">';
-							echo '</div>';
-							$i++;
+						?>
+					</ul>
+				</div>
+				<div class="col-md-8">
+					<?php
+						echo '<h3>' . $selected . '</h3>';
+						echo '<img class="img-responsive" src="../resources/game_images/'.$selected.'.jpg" alt="">';
+						$result = $sql->runQuery("SELECT description FROM Game where name='" . $selected . "'");
+						while ($row = $result->fetch_assoc()) {
+							echo '<br><p>' . $row['description'] . '</p>';
 						}
 					?>
 				</div>
-
-				<!-- Controls -->
-				<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-				</a>
-				<a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-				</a>
-				 <div class="main-text hidden-xs">
-				 	<div class="text-center">
-				 	</div>
-				 </div>
 			</div>
 		</div>
 	</div>
