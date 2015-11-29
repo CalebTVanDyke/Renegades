@@ -77,6 +77,9 @@ $(document).ready(function() {
 								echo '<div class="item">';
 							}
 							echo '<img src="../resources/game_images/'.$item["name"].'.jpg" alt="">';
+							echo '<div class="carousel-caption">';
+							echo '<a href="games.php?game=' . $item["name"] . '""><h3 class="border-text">' . $item["name"] . '</h3></a>';
+							echo '</div>';
 							echo '</div>';
 							$i++;
 						}
