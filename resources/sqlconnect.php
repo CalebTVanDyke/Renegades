@@ -35,7 +35,7 @@ class SqlConnect {
 	private function initialize(){
 		try {
 			// See 'constants.php'
-			$this->connUrl = "mysql.cs.iastate.edu";
+			$this->connUrl = "10.25.71.66";
 			$this->username = "dbu461rene";
 			$this->database = "db461rene";
 			$this->password = "yk2Gtcej3UAr";
