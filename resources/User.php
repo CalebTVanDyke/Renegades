@@ -51,7 +51,7 @@ class User
 	public function login() {
 		session_start();
 		$sql = SqlConnect::getInstance();
-		$result = $sql->runQuery("SELECT member_id, pass_hash, salt FROM Member where player_tag = '".$this->player_tag."';");
+		$result = $sql->runQuery("SELECT admin, member_id, pass_hash, salt FROM Member where player_tag = '".$this->player_tag."';");
 		if ($result->num_rows == 0) {
 			return "Username does not exist.";
 		}
@@ -59,11 +59,14 @@ class User
 		$hash = $row["pass_hash"];
 		$salt = $row["salt"];
 		$this->id = $row["member_id"];
+		$admin = $row["admin"];
+		echo $admin;
 		// verify that password matches with stored password
 		$success = authUtil::verifyPass(HASHALGO, $hash, $salt, $this->player_tag, $this->password);
 		if ($success) {
 			$_SESSION["id"] = $this->id;
 			$_SESSION["player_tag"] = $this->player_tag;
+			$_SESSION["admin"] = $admin;
 			return NULL;
 		} else {
 			return "Username and password did not match.";
@@ -81,5 +84,6 @@ class User
 		session_start();
 		unset($_SESSION["id"]);
 		unset($_SESSION["player_tag"]);
+		unset($_SESSION["admin"]);
 	}
 }

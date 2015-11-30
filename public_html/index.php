@@ -17,8 +17,7 @@ session_start();
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$('.carousel').carousel({
-	});
+	$('.carousel').carousel();
 });
 </script>
 

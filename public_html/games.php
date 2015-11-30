@@ -17,8 +17,16 @@ session_start();
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$('.carousel').carousel({
-	});
+	$('.feature-game').change(function(event){
+		var val = $(this).val();
+		var checked = this.checked ? 1 : 0;
+		$.ajax({
+			url: 'scripts/setFeatured.php',
+			data: {'id' : val, 'setTo' : checked}
+		}).done(function(response) {
+			console.log(response);
+		})
+	})
 });
 </script>
 
@@ -43,17 +51,27 @@ $(document).ready(function() {
 			<?php
 				include_once ('../resources/sqlconnect.php');
 
-				$sql = SqlConnect::getInstance();
-				$result = $sql->runQuery("SELECT name FROM Game where featured=1;");
-				$data = array();
-				$count = 0;
-				while ($row = $result->fetch_assoc()) {
-					$count++;
-					array_push($data, array("name" => $row["name"]));
-				}
 				$selected = NULL;
 				if (isset($_GET["game"])) {
 					$selected = $_GET["game"];
+				}
+				$sql = SqlConnect::getInstance();
+				$result = $sql->runQuery("SELECT name, featured, game_id FROM Game;");
+				$data = array();
+				$count = 0;
+				$featured = false;
+				$id = -1;
+				while ($row = $result->fetch_assoc()) {
+					if ($selected == NULL && $count == 0) {
+						$id = $row["game_id"];
+						$featured = $row["featured"];
+					}
+					$count++;
+					array_push($data, array("name" => $row["name"]));
+					if ($selected != NULL && $row["name"] == $selected) {
+						$id = $row["game_id"];
+						$featured = $row["featured"];
+					}
 				}
 			?>
 			<div class="row">
@@ -73,11 +91,34 @@ $(document).ready(function() {
 				</div>
 				<div class="col-md-8">
 					<?php
+						if (isset($_SESSION['admin']) && $_SESSION['admin']) {
+							echo '<div id="admin-panel">';
+							echo '<a class="btn btn-default add-game" href="#" role="button">Add Game</a> ';
+							echo '<a class="btn btn-default edit-game" href="#" role="button" value="' . $id . '">Edit Game</a> '; 
+							echo '<label>';
+							if ($featured) {
+								echo '<input checked type="checkbox" value="' . $id . '" class="feature-game">'; 
+							} else {
+								echo '<input type="checkbox" value="' . $id . '" class="feature-game">';
+							}
+							echo ' Featured Game';
+							echo '</label>';
+							echo '</div>';
+						}
+					?>
+					<?php
 						echo '<h3>' . $selected . '</h3>';
 						echo '<img class="img-responsive" src="../resources/game_images/'.$selected.'.jpg" alt="">';
-						$result = $sql->runQuery("SELECT description FROM Game where name='" . $selected . "'");
+						$result = $sql->runQuery("SELECT description, genre, release_date FROM Game where name='" . $selected . "'");
 						while ($row = $result->fetch_assoc()) {
-							echo '<br><p>' . $row['description'] . '</p>';
+							echo '<h4>Description</h4>';
+							echo '<p>' . $row['description'] . '</p>';
+
+							echo '<h4>Genre</h4>';
+							echo '<p>' . $row['genre'] . '</p>';
+
+							echo '<h4>Release Date</h4>';
+							echo '<p>' . $row['release_date'] . '</p>';
 						}
 					?>
 				</div>
