@@ -39,11 +39,11 @@ $(document).ready(function() {
 		<ul class="nav nav-tabs nav-justified">
 			<li><a id="home" href="index.php">Home</a></li>
 			<li class="active"><a id="games" href="games.php">Games</a></li>
-			<li><a id="tournaments">Tournaments</a></li>
-			<li><a id="leaderboards">Leaderboards</a></li>
+			<li><a id="tournaments" href="tournaments.php">Tournaments</a></li>
+			<li><a id="leaderboards" href="leaderboards.php">Leaderboards</a></li>
 			<?php 
 				if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
-					echo '<li><a id="profile">Profile</a></li>';
+					echo '<li><a id="profile" href="profile.php">Profile</a></li>';
 				}
 			?>
 		</ul>
@@ -94,7 +94,6 @@ $(document).ready(function() {
 						if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 							echo '<div id="admin-panel">';
 							echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addGame">Add Game</button> ';
-							echo '<a class="btn btn-default edit-game" href="#" role="button" value="' . $id . '">Edit Game</a> '; 
 							echo '<label>';
 							if ($featured) {
 								echo '<input checked type="checkbox" value="' . $id . '" class="feature-game">'; 
