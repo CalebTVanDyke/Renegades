@@ -93,7 +93,7 @@ $(document).ready(function() {
 					<?php
 						if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 							echo '<div id="admin-panel">';
-							echo '<a class="btn btn-default add-game" href="#" role="button">Add Game</a> ';
+							echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addGame">Add Game</button> ';
 							echo '<a class="btn btn-default edit-game" href="#" role="button" value="' . $id . '">Edit Game</a> '; 
 							echo '<label>';
 							if ($featured) {
@@ -109,7 +109,7 @@ $(document).ready(function() {
 					<?php
 						echo '<h3>' . $selected . '</h3>';
 						echo '<img class="img-responsive" src="../resources/game_images/'.$selected.'.jpg" alt="">';
-						$result = $sql->runQuery("SELECT description, genre, release_date FROM Game where name='" . $selected . "'");
+						$result = $sql->runQuery("SELECT description, genre, release_date, max_players FROM Game where name='" . $selected . "'");
 						while ($row = $result->fetch_assoc()) {
 							echo '<h4>Description</h4>';
 							echo '<p>' . $row['description'] . '</p>';
@@ -119,6 +119,9 @@ $(document).ready(function() {
 
 							echo '<h4>Release Date</h4>';
 							echo '<p>' . $row['release_date'] . '</p>';
+
+							echo '<h4>Max Players</h4>';
+							echo '<p>' . $row['max_players'] . '</p>';
 						}
 					?>
 				</div>
@@ -138,5 +141,42 @@ $(document).ready(function() {
 			</p>
 		</div>
 	</footer>
+	<!-- Modal -->
+	<div class="modal fade" id="addGame" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Add Game</h4>
+			  </div>
+			  <div class="modal-body">
+					<form id="addGameForm" action="scripts/addGame.php" method="POST" enctype="multipart/form-data">
+						<div class="form-group">
+							<label>Game Title <input name="title" type="text" class="form-control"></label>
+						</div>
+						<div class="form-group">
+							<label>Release Date <input name="releaseDate" type="date" class="form-control"></label>
+						</div>
+						<div class="form-group">
+							<label>Genre <input name="genre" type="text" class="form-control"></label>
+						</div>
+						<div class="max-players">
+							<label>Max Players <input name="maxPlayers" type="number" class="form-control"></label>
+						</div>
+						<div class="form-group">
+							<label>Description<textarea name="description" class="form-control"></textarea></label>
+						</div>
+						<div class="form-group">
+							<label>Image<input name="image" type="file" class="form-control"></label>
+						</div>
+					</form>
+			  </div>
+			  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" form="addGameForm" class="btn btn-primary">Save changes</button>
+			  </div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
