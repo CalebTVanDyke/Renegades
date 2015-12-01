@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Renegades</title>
+	<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" media="all" href="css/main.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	
+	
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.bracket.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.bracket.min.css" />
+
+<!--
+<link rel="stylesheet" href="css/jquery.bracket-world.css" />
+<script src="js/jquery.bracket-world.min.js"></script>-->
+</head>
+<body>
+
+<div class="container">
+	<div class="header">
+			<h1>Game Renegades</h1>
+	</div>
+		<ul class="nav nav-tabs nav-justified">
+			<li class=""><a id="home" href="index.php">Home</a></li>
+			<li><a id="games" href="games.php">Games</a></li>
+			<li class="active"><a id="tournaments" href="tournaments.php">Tournaments</a></li>
+			<li><a id="leaderboards" href="leaderboards.php">Leaderboards</a></li>
+			<?php 
+				if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
+					echo '<li><a id="profile" href="profile.php">Profile</a></li>';
+				}
+			?>
+		</ul>
+	<h2><?php echo $_POST["title"]; ?></h2>
+
+	<div id="minimal"></div>
+	
+<script>
+var minimalData = {
+    teams : [
+      ["Team 1", "Team 2"], /* first matchup */
+      ["Team 3", "Team 4"]  /* second matchup */
+    ],
+    results : [
+      [[1,2], [3,4]],       /* first round */
+      [[4,6], [2,1]]        /* second round */
+    ]
+  }
+ 
+$(function() {
+    $('#minimal').bracket({
+      init: minimalData /* data to initialize the bracket with */ })
+  })
+ </script>
+</div>
+
+<footer class="footer">
+		<div class="container">
+			<p class="text-muted">
+				<?php 
+					if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
+						echo '<a href="logout.php"> Log out</a>';
+					} else {
+						echo '<a href="login.php">Log in</a> | <a href="register.php">Register</a>';
+					}
+				?>
+			</p>
+		</div>
+	</footer>
+	
+</body>
+</html>
