@@ -1,7 +1,7 @@
 <?php
 include_once ('sqlconnect.php');
-include_once ("authConfig.php");
 include_once ("authUtil.php");
+include_once ("authConfig.php");
 
 /**
 * 
@@ -13,7 +13,6 @@ class User
 	private $email;
 	private $id;
 
-	
 	function __construct($player_tag, $password, $email)
 	{
 		$this->player_tag = $player_tag;
@@ -27,8 +26,9 @@ class User
 	 * @return null on success and string containing error message on error.
 	 */
 	public function addUser() {
-		session_start();
+		echo "starting the salt";
 		$salt = authUtil::makeSalt(SALTSIZE);
+		echo "passed the salt";
 		$hash = authUtil::makePassHash(HASHALGO, $salt, $this->player_tag, $this->password);
 		$sql = SqlConnect::getInstance();
 		$result = $sql->runQuery("SELECT member_id FROM Member where player_tag = '".$this->player_tag."';");

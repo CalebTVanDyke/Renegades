@@ -14,7 +14,10 @@ class authUtil {
 	 *
 	 */
 	public static function makeSalt($size){
-		return mcrypt_create_iv($size, MCRYPT_DEV_URANDOM);
+		$fp = fopen('/dev/urandom', 'r');
+		$randomString = base64_encode(fread($fp, 32));
+		fclose($fp);
+		return $randomString;
 	}
 
 	/**

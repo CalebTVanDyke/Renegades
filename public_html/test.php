@@ -1,7 +1,5 @@
 <?php 
-
-include_once ('../resources/User.php');
-
-$user = new User("root", "root", "email");
-echo $user->login();
+$fp = fopen('/dev/urandom', 'r');
+$randomString = base64_encode(fread($fp, 32));
+fclose($fp);
  ?>
