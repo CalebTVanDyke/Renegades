@@ -26,9 +26,7 @@ class User
 	 * @return null on success and string containing error message on error.
 	 */
 	public function addUser() {
-		echo "starting the salt";
 		$salt = authUtil::makeSalt(SALTSIZE);
-		echo "passed the salt";
 		$hash = authUtil::makePassHash(HASHALGO, $salt, $this->player_tag, $this->password);
 		$sql = SqlConnect::getInstance();
 		$result = $sql->runQuery("SELECT member_id FROM Member where player_tag = '".$this->player_tag."';");
@@ -60,7 +58,6 @@ class User
 		$salt = $row["salt"];
 		$this->id = $row["member_id"];
 		$admin = $row["admin"];
-		echo $admin;
 		// verify that password matches with stored password
 		$success = authUtil::verifyPass(HASHALGO, $hash, $salt, $this->player_tag, $this->password);
 		if ($success) {
