@@ -1,33 +1,22 @@
-<?php 
-session_start();
-if (!isset($_SESSION["player_tag"]) || !isset($_SESSION["id"])) {
-	header("Location: index.php");
-	die();
-}
-?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Renegades</title>
-<link rel="stylesheet" type="text/css" media="all"
-	href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" media="all"
-	href="css/main.css">
-<link rel="stylesheet" type="text/css" media="all"
-	href="css/sticky-footer.css">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-	$('.carousel').carousel();
-});
-</script>
-
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Renegades</title>
+	<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" media="all" href="css/main.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	
+<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="jquery.bracket.min.js"></script>
+<link rel="stylesheet" type="text/css" href="jquery.bracket.min.css" />
 </head>
 <body>
-	<div class="container">
+
+<div class="container">
 		<div class="header">
 			<h1>Game Renegades</h1>
 		</div>
@@ -44,6 +33,19 @@ $(document).ready(function() {
 		</ul>
 		<div id="content">
 		</div>
+		
+		<form action="tournaments_display.php" method="post">
+		Title of tournament:<br>
+		<input type="text" name="title">
+		<br><br>Size of the tournament:<br>
+		<input type="radio" name="size" value="4" checked> 4 <br>
+		<input type="radio" name="size" value="8"> 8 <br>
+		<input type="radio" name="size" value="16"> 16 <br>
+		<input type="radio" name="size" value="32"> 32 <br>
+		<input type="radio" name="size" value="64"> 64 <br>
+		<input type="submit" value="Create Bracket">
+	</form>
+	
 	</div>
 	<footer class="footer">
 		<div class="container">
