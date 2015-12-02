@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,8 +44,11 @@
 	
 	<!--Entry handling and finalize button-->
 	<ol id="entrants"></ol>
-	Type your username to join: <input type="text" id="entrant"/>
-	<input type='button' onclick='addEntrant()' value='Submit'/>
+		<?php 
+			if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
+				echo '<input type="button" onclick="addEntrant($_SESSION["player_tag"])" value="Join"/>';
+			}
+		?>
 	<form action="" method="post">
 		<br><br><br><input type="submit" value="Finish Bracket">
 	</form>
@@ -51,9 +57,8 @@
 <script>
 
 /*Adds a user to the list of participating members in the tournament*/
-function addEntrant() {
+function addEntrant(entrant) {
 	var list = document.getElementById('entrants');
-	var entrant = document.getElementById('entrant').value;
 	var entry = document.createElement('li');
 	entry.appendChild(document.createTextNode(entrant));
 	list.appendChild(entry);
