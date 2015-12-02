@@ -33,12 +33,12 @@
 				}
 			?>
 		</ul>
+		
 	<h2><?php echo $_POST["title"]; ?></h2>
 
  
-	<div id="save"></div>
-	<div id="dataOutput"></div>
-	<div id="doubleElimination"></div>
+	<div id="tournament"></div>
+	
 	<script>
 	
 var saveData = {
