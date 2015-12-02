@@ -38,7 +38,7 @@
 		</ul>
 	<h2><?php echo $_POST["title"]; ?></h2>
 
-	<div id="minimal"></div>
+	<!--<div id="minimal"></div>
 	
 <script>
 var minimalData = {
@@ -56,7 +56,85 @@ $(function() {
     $('#minimal').bracket({
       init: minimalData /* data to initialize the bracket with */ })
   })
- </script>
+ </script>-->
+ 
+	<div id="save"></div>
+	<div id="dataOutput"></div>
+	<script>
+	
+var saveData = {
+    teams : [
+      ["Team 1", "Team 2"], /* first matchup */
+      ["Team 3", "Team 4"]  /* second matchup */
+    ],
+    results : [[1,0], [2,7]]
+  }
+  
+var bigData = {
+  teams : [
+    ["Team 1",  "Team 2" ],
+    ["Team 3",  "Team 4" ],
+    ["Team 5",  "Team 6" ],
+    ["Team 7",  "Team 8" ],
+    ["Team 9",  "Team 10"],
+    ["Team 11", "Team 12"],
+    ["Team 13", "Team 14"],
+    ["Team 15", "Team 16"]
+  ],
+  results : [[ /* WINNER BRACKET */
+    [[3,5], [2,4], [6,3], [2,3], [1,5], [5,3], [7,2], [1,2]],
+    [[1,2], [3,4], [5,6], [7,8]],
+    [[9,1], [8,2]],
+    [[1,3]]
+  ], [         /* LOSER BRACKET */
+    [[5,1], [1,2], [3,2], [6,9]],
+    [[8,2], [1,2], [6,2], [1,3]],
+    [[1,2], [3,1]],
+    [[3,0], [1,9]],
+    [[3,2]],
+    [[4,2]]
+  ], [         /* FINALS */
+    [[3,8], [1,2]],
+    [[2,1]]
+  ]]
+}
+ 
+/* Called whenever bracket is modified
+ *
+ * data:     changed bracket object in format given to init
+ * userData: optional data given when bracket is created.
+ */
+function saveFn(data, userData) {
+  var json = jQuery.toJSON(data)
+  $('#saveOutput').text('POST '+userData+' '+json)
+  /* You probably want to do something like this
+  jQuery.ajax("rest/"+userData, {contentType: 'application/json',
+                                dataType: 'json',
+                                type: 'post',
+                                data: json})
+  */
+}
+ 
+$(function() {
+    var container = $('#save')
+    container.bracket({
+      init: saveData,
+      save: saveFn,
+      userData: "http://myapi"})
+ 
+    /* You can also inquiry the current data */
+    var data = container.bracket('data')
+    $('#dataOutput').text(jQuery.toJSON(data))
+  })
+  
+/*Skips the consolation round to determine 3rd and 4th place*/
+$(function() {
+    $('div#noConsolationRound .demo').bracket({
+      skipConsolationRound: true,
+      init: doubleEliminationData})
+  })
+  </script>
+  
 </div>
 
 <footer class="footer">
@@ -71,7 +149,7 @@ $(function() {
 				?>
 			</p>
 		</div>
-	</footer>
+</footer>
 	
 </body>
 </html>
