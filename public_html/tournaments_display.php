@@ -10,16 +10,21 @@
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 	
-<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
-<script type="text/javascript" src="jquery.bracket.min.js"></script>
-<link rel="stylesheet" type="text/css" href="jquery.bracket.min.css" />
+	
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.bracket.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.bracket.min.css" />
+
+<!--
+<link rel="stylesheet" href="css/jquery.bracket-world.css" />
+<script src="js/jquery.bracket-world.min.js"></script>-->
 </head>
 <body>
 
 <div class="container">
-		<div class="header">
+	<div class="header">
 			<h1>Game Renegades</h1>
-		</div>
+	</div>
 		<ul class="nav nav-tabs nav-justified">
 			<li class=""><a id="home" href="index.php">Home</a></li>
 			<li><a id="games" href="games.php">Games</a></li>
@@ -31,23 +36,30 @@
 				}
 			?>
 		</ul>
-		<div id="content">
-		</div>
-		
-		<form action="tournaments_display.php" method="post">
-		Title of tournament:<br>
-		<input type="text" name="title">
-		<br><br>Size of the tournament:<br>
-		<input type="radio" name="size" value="4" checked> 4 <br>
-		<input type="radio" name="size" value="8"> 8 <br>
-		<input type="radio" name="size" value="16"> 16 <br>
-		<input type="radio" name="size" value="32"> 32 <br>
-		<input type="radio" name="size" value="64"> 64 <br>
-		<input type="submit" value="Create Bracket">
-	</form>
+	<h2><?php echo $_POST["title"]; ?></h2>
+
+	<div id="minimal"></div>
 	
-	</div>
-	<footer class="footer">
+<script>
+var minimalData = {
+    teams : [
+      ["Team 1", "Team 2"], /* first matchup */
+      ["Team 3", "Team 4"]  /* second matchup */
+    ],
+    results : [
+      [[1,2], [3,4]],       /* first round */
+      [[4,6], [2,1]]        /* second round */
+    ]
+  }
+ 
+$(function() {
+    $('#minimal').bracket({
+      init: minimalData /* data to initialize the bracket with */ })
+  })
+ </script>
+</div>
+
+<footer class="footer">
 		<div class="container">
 			<p class="text-muted">
 				<?php 
@@ -60,5 +72,6 @@
 			</p>
 		</div>
 	</footer>
+	
 </body>
 </html>
