@@ -31,7 +31,7 @@ $(document).ready(function() {
 			<li class="active"><a id="home" href="index.php">Home</a></li>
 			<li><a id="games" href="games.php">Games</a></li>
 			<li><a id="tournaments" href="tournaments.php">Tournaments</a></li>
-			<li><a id="leaderboards" href="leaderboards.php">Leaderboards</a></li>
+			<li><a id="leaderboards" href="Leaderboards.php">Leaderboards</a></li>
 			<?php 
 				if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 					echo '<li><a id="profile" href="profile.php">Profile</a></li>';
