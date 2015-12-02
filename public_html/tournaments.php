@@ -10,9 +10,9 @@
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 	
-<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
-<script type="text/javascript" src="jquery.bracket.min.js"></script>
-<link rel="stylesheet" type="text/css" href="jquery.bracket.min.css" />
+<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="js/jquery.bracket.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.bracket.min.css" />
 </head>
 <body>
 
@@ -37,14 +37,60 @@
 		<form action="tournaments_display.php" method="post">
 		Title of tournament:<br>
 		<input type="text" name="title">
-		<br><br>Size of the tournament:<br>
-		<input type="radio" name="size" value="4" checked> 4 <br>
-		<input type="radio" name="size" value="8"> 8 <br>
-		<input type="radio" name="size" value="16"> 16 <br>
-		<input type="radio" name="size" value="32"> 32 <br>
-		<input type="radio" name="size" value="64"> 64 <br>
+		<br>Consolation Round?<br>
+		<input type="checkbox" name="answer" value="yes"> Yes <br>
+		<input type="checkbox" name="answer" value="no"> No <br>
+		<button id="consolButton">Change</button>
 		<input type="submit" value="Create Bracket">
 	</form>
+	
+	<div id="tournament"></div>
+	
+<script>	
+var saveData = {
+    teams : [
+      ["Team 1", "Team 2"], /* first matchup */
+      ["Team 3", "Team 4"]  /* second matchup */
+    ],
+    results : [[1,0], [2,7]]
+}
+ 
+/* Called whenever bracket is modified
+ *
+ * data:     changed bracket object in format given to init
+ * userData: optional data given when bracket is created.
+ */
+function saveFn(data, userData) {
+  var json = jQuery.toJSON(data)
+  $('#saveOutput').text('POST '+userData+' '+json)
+  /* You probably want to do something like this
+  jQuery.ajax("rest/"+userData, {contentType: 'application/json',
+                                dataType: 'json',
+                                type: 'post',
+                                data: json})
+  */
+}
+ 
+$(function() {
+    var container = $('#save')
+    container.bracket({
+      init: saveData,
+      save: saveFn,
+      userData: "http://myapi"})
+ 
+    /* You can also inquiry the current data */
+    var data = container.bracket('data')
+    $('#dataOutput').text(jQuery.toJSON(data))
+  })
+  
+  $('.consol').click(/*Skips the consolation round to determine 3rd and 4th place*/
+	$(function() {
+		$('div#noConsolationRound .demo').bracket({
+		skipConsolationRound: true,
+		init: doubleEliminationData})
+	})
+  });
+</script>
 	
 	</div>
 	<footer class="footer">

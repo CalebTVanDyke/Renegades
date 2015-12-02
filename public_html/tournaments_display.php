@@ -15,9 +15,6 @@
 <script type="text/javascript" src="js/jquery.bracket.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/jquery.bracket.min.css" />
 
-<!--
-<link rel="stylesheet" href="css/jquery.bracket-world.css" />
-<script src="js/jquery.bracket-world.min.js"></script>-->
 </head>
 <body>
 
@@ -39,7 +36,8 @@
 	<h2><?php echo $_POST["title"]; ?></h2>
 
  
-	<!--<div id="save"></div>-->
+	<div id="save"></div>
+	<div id="dataOutput"></div>
 	<div id="doubleElimination"></div>
 	<script>
 	
@@ -139,7 +137,6 @@ $(function() {
       init: doubleEliminationData})
   })
   </script>
-  
 </div>
 
 <footer class="footer">
