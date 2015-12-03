@@ -47,8 +47,8 @@ $user = $all_games->fetch_assoc();
     <style>
         #uploadProfilePictureButton{
             position:absolute;
-            bottom:12px;
-            right:75px;
+            bottom:7px;
+            right:70px;
         }
     </style>
     <body>
@@ -72,7 +72,7 @@ $user = $all_games->fetch_assoc();
                     <div class="col-sm-12 col-md-4" style="text-align: center;">
                         <div id="profilePicture" class="centerBlock">
                             <img src="http://ui.uniteddogs.com/img/ui/user_icons/_no_avatar_f_180x180.png" class="img-thumbnail">
-                            <button id="uploadProfilePictureButton" data-toggle="modal" data-target="#uploadProfilePicture" style="display: none;"> Change... </button>
+                            <button id="uploadProfilePictureButton" class="btn btn-default" data-toggle="modal" data-target="#uploadProfilePicture" style="display: none;"> Change... </button>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-8" style="height: 100%;;">
@@ -129,7 +129,7 @@ $user = $all_games->fetch_assoc();
                                 echo '<img class="img-responsive" src="../resources/game_images/'.$row['name'].'.jpg" alt="">';
                                 echo '</div>';
                                 echo '<div class="col-sm-8">';
-                                echo '<span>'. $row['name'] .'</span>';
+                                echo '<span><a href="games.php?game='. $row[name] .'">'. $row['name'] .'</a></span>';
                                 echo '</div>';
                                 echo '</div>';
                                 echo '<br>';
