@@ -37,11 +37,21 @@
 		
 		
 		
-	<form action="tournament_create.php" method="post">
-		<input type="submit" value="Create New Tournament">
+		<form action="tournament_create_bracket.php" method="post">
+		Title of tournament: <br><input type="text" name="title"><br>
+		<input type="radio" name="type" value="double" checked>Double Elimination<br>
+		<input type="radio" name="type" value="single">Single Elimination<br>
+		Price for Entry: <br><input type="integer" name="price"><br>
+		Game: <br><input type="text" name="game"><br>
+		Date: <br><input type="text" name="date"><br>
+		<input type="submit" value="Create Bracket">
 	</form>
-
-
+	
+	<!--Consolation option. Need javascript integration in order for it to work
+	<br><br>
+	<button onclick="checkConsolation()">Consolation Round?</button>
+	<label><input id="consolation" type="checkbox">Yes</label>-->
+	
 	</div>
 	<footer class="footer">
 		<div class="container">
