@@ -1,3 +1,7 @@
+<?php 
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,12 +40,30 @@
 		</div>
 		
 		
-		
-	<form action="tournament_create.php" method="post">
-		<input type="submit" value="Create New Tournament">
-	</form>
+		<?php 
+				if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"]) && isset($_SESSION["admin"])==1) {
+					echo '<form action="tournament_create.php" method="post">
+					<input type="submit" value="Create New Tournament">
+						</form>';
+				}
+			?>	
 
+	<!-- List of tournaments-->
+	<ul id="tournaments">
+		<?php
+				include_once ('../resources/sqlconnect.php');
 
+				$sql = SqlConnect::getInstance();
+				$result = $sql->runQuery("SELECT name, date, open, tournament_id FROM Tournament;");
+				while ($row = $result->fetch_assoc()) {
+					if($row["open"]==0)
+						echo '<li><a href="tournaments_display.php?tournament_id='.$row["tournament_id"].'">'.$row["name"].' '.$row["date"].'</li>';
+					else
+						echo '<li><a href="tournament_create_bracket.php?tournament_id='.$row["tournament_id"].'">'.$row["name"].' '.$row["date"].'</li>';
+				}
+			?>
+	</ul>
+	
 	</div>
 	<footer class="footer">
 		<div class="container">
