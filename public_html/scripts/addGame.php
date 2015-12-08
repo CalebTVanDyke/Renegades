@@ -1,22 +1,24 @@
-<?php 
+<?php
 
 include_once ('../../resources/sqlconnect.php');
 
-$title = mysqli_real_escape_string($_POST["title"]);
-$release = $_POST["releaseDate"];
-$description = mysqli_real_escape_string($_POST["description"]);
-$genre = mysqli_real_escape_string($_POST["genre"]);
-$maxPlayers = $_POST["maxPlayers"];
-
 $sql = SqlConnect::getInstance();
-$query = "INSERT INTO Game (name, genre, release_date, description, max_players) VALUES ('".$title."','".$genre."','".$release."','".$description."','".$maxPlayers."');";
+$title = $sql->escape($_POST["title"]);
+$release = $_POST["releaseDate"];
+$description = $sql->escape($_POST["description"]);
+$genre = $sql->escape($_POST["genre"]);
+$maxPlayers = $_POST["maxPlayers"];
+$fileName = basename($_FILES["image"]["name"]);
+
+$query = "INSERT INTO Game (name, genre, release_date, description, max_players, image_name) VALUES ('".$title."','".$genre."','".$release."','".$description."','".$maxPlayers."', '".$fileName."');";
 $sql->runQuery($query);
 
 $target_dir = "../../resources/game_images/";
-$target_file = $target_dir . $_POST["title"] . ".jpg";
+$target_file = $target_dir . basename($_FILES["image"]["name"]);;
 
 if(move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
 	echo "The file ". $target_file . " has been uploaded.";
 }
-
+header('Location: ../games.php?game=' . $title);
+die();
 ?>
