@@ -7,7 +7,11 @@ if (!isset($_SESSION["player_tag"]) || !isset($_SESSION["id"])) {
 
 include_once ('../resources/sqlconnect.php');
 
-$id = $_SESSION["id"];
+if (isset($_GET["user"])) {
+	$id = $_GET["user"];
+} else {
+	$id = $_SESSION["id"];
+}
 
 $sql = SqlConnect::getInstance();
 
@@ -81,7 +85,7 @@ $user = $all_games->fetch_assoc();
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <h2 style="margin-top: 0;"><?php echo $_SESSION["player_tag"];?></h2>
+                                        <h2 style="margin-top: 0;"><?php echo $user["player_tag"];?></h2>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -114,8 +118,11 @@ $user = $all_games->fetch_assoc();
                             <div class="row">
                                 <div class="col-sm-12">
                                     <br>
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addGame">Edit Games</button>
-                                </div>
+									<?php
+										if (isset($_SESSION["id"]) && $id == $_SESSION["id"])
+                                    		echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addGame">Edit Games</button>';
+									?>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -123,14 +130,14 @@ $user = $all_games->fetch_assoc();
                         <h3>My Games</h3>
 
                             <?php
-                            $user_games = $sql->runQuery("SELECT mg.game_id, g.name FROM MemberGame mg INNER JOIN Game g ON mg.game_id = g.game_id WHERE mg.member_id = ". $_SESSION['id'] .";");
+                            $user_games = $sql->runQuery("SELECT mg.game_id, g.name, g.image_name FROM MemberGame mg INNER JOIN Game g ON mg.game_id = g.game_id WHERE mg.member_id = ". $_SESSION['id'] .";");
 
                             while($row = $user_games->fetch_assoc()){
                                 echo '<div class="row"> <div class="col-sm-4">';
-                                echo '<img class="img-responsive" src="../resources/game_images/'.$row['name'].'.jpg" alt="">';
+                                echo '<img class="img-responsive" src="../resources/game_images/'.$row['image_name'].'" alt="">';
                                 echo '</div>';
                                 echo '<div class="col-sm-8">';
-                                echo '<span><a href="games.php?game='. $row[name] .'">'. $row['name'] .'</a></span>';
+                                echo '<span><a href="games.php?game='. $row['name'] .'">'. $row['name'] .'</a></span>';
                                 echo '</div>';
                                 echo '</div>';
                                 echo '<br>';
