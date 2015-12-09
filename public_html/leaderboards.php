@@ -173,7 +173,8 @@ error_reporting(E_ALL);
 				for ($i = 0; $i < $count2; $i++) {
 					if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 						
-						$results = $sql->runQuery("SELECT m.member_id FROM db461rene.Member m WHERE m.player_tag !=  " .$_SESSION["player_tag"]." AND m.player_tag = " .($tData[$i]["m.player_tag"]).";");
+						$results = $sql->runQuery("SELECT m.member_id FROM db461rene.Member m WHERE m.player_tag !=  " .$_SESSION["player_tag"]. " AND m.player_tag = " .($tData[$i]["m.player_tag"]). ";");
+						var_dump($tData[$i]["m.player_tag"]);
 						var_dump($results);
 						$mData = array();
 						while ($row2 = $results->fetch_row()) {
