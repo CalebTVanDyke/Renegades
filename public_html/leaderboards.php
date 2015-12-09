@@ -40,7 +40,7 @@ error_reporting(E_ALL);
 	<div id="content">
 		
 		<?php
-
+				include_once ('../resources/sqlconnect.php');
 				$selected = NULL;
 				if (isset($_GET["game"])) {
 					$selected = $_GET["game"];
@@ -67,9 +67,7 @@ error_reporting(E_ALL);
 					}
 				}
 			?>
-		<?php 
-			include_once ('../resources/sqlconnect.php');
-
+		<?php
 			$sql = SqlConnect::getInstance();
 			$result = $sql->runQuery("SELECT g.name FROM db461rene.Game g");
 			
