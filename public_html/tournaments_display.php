@@ -48,7 +48,7 @@ var val = $('.tournament_id').val();
 				}
 			?>
 		</ul>
-
+		<div id="content">
 	<!--Get bracket and other tournament info-->
 	<?php
 		include_once ('../resources/sqlconnect.php');
@@ -141,6 +141,7 @@ $(function() {
       init: doubleEliminationData})
   })*/
   </script>
+  </div>
 </div>
 
 <footer class="footer">

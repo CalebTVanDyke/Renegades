@@ -49,7 +49,7 @@ $(document).ready(function() {
 				}
 			?>
 		</ul>
-	<div class="container">
+	<div id="content>
 	
 		<h2><?php echo $_POST["title"]; ?></h2>
 

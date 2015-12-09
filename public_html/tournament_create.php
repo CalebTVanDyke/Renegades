@@ -37,7 +37,7 @@ session_start();
 			?>
 		</ul>
 		<div id="content">
-		</div>
+		
 		
 		
 		
@@ -58,6 +58,7 @@ session_start();
 	<label><input id="consolation" type="checkbox">Yes</label>-->
 	
 	</div>
+</div>
 	<footer class="footer">
 		<div class="container">
 			<p class="text-muted">
