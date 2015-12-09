@@ -170,7 +170,7 @@ error_reporting(E_ALL);
 					$count2++;
 				}
 				
-				for ($i = 0; $i < $count2; $i++) {
+				for ($i = 0; $i <= $count2; $i++) {
 					if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 						
 						$result3 = $sql->runQuery("SELECT m.member_id FROM db461rene.Member m WHERE m.player_tag = '" .($tData[$i]["m.player_tag"]). "';");
