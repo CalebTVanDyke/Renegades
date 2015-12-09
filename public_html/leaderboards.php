@@ -143,13 +143,11 @@ session_start();
 				
 				for ($i = 0; $i < $count2; $i++) {
 					if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
-						$result3 = $sql->runQuery("SELECT m.player_tag, mg.member_id FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND game_id=" . $id . " (gp.platform_id=p.platform_id) AND mg.member_id!= " . $_SESSION["id"] .";");
+						$result3 = $sql->runQuery("SELECT mg.member_id FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (m.player_tag = " .($tData[$i]["m.player_tag"]).") AND (g.game_id=gp.game_id) AND game_id=" .$id. " (gp.platform_id=p.platform_id) AND mg.member_id != " .$_SESSION["id"].";");
 						
-						$tData = array();
 						$mData = array();
 						while ($row2 = $result3->fetch_row()) {
-							array_push($tData, array("m.player_tag" => $row2[0]));
-							array_push($mData, array("mg.member_id" => $row2[1]));
+							array_push($mData, array("mg.member_id" => $row2[0]));
 						}
 						
 						echo ('<tr><td><a href="profile.php?user=' . $mData[$i]['member_id'] . '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
