@@ -1,8 +1,8 @@
 <?php 
 session_start();
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -184,7 +184,7 @@ error_reporting(E_ALL);
 				for ($i = 0; $i < $count2; $i++) {
 					if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 						
-						var_dump($mData);
+						//var_dump($mData);
 						if ($_SESSION["player_tag"] == $tData[$i]["m.player_tag"]){
 							echo ('<tr bgcolor="#FFCC99"><td><a href="profile.php?user=' .($mData[$i]['m.member_id']). '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 						}else{
