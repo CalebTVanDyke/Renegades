@@ -11,10 +11,19 @@ $date = $_GET["date"];
 //Reverse date for db format
 $date = strrev($date);
 $game = $_GET["game"];
+$game_id = -1;
 
 include_once ('../../resources/sqlconnect.php');
 
 $sql = SqlConnect::getInstance();
+//Find Game id
+$query = "SELECT game_id FROM Game WHERE name='$game'";
+$result = $sql->runQuery($query);
+
+while ($row = $result->fetch_assoc()) {
+	$game_id = $row["game_id"];
+}
+
 //Insert tournament
 $query = "INSERT INTO Tournament (entries, date, tournament_type, price, game_id, name,open,bracket) VALUES ('".$max_size."','".$date."','".$type."','".$price."','".$game."', '".$name."',1,'empty');";
 $sql->runQuery($query);
