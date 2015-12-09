@@ -117,9 +117,9 @@ error_reporting(E_ALL);
 			</form>
 			<?php
 			if(isset($_GET['submit2'])){
-				$search = $_GET['Name'];  // Storing Selected Value In Variable
+				$search = $_GET['Name'];
 			}
-		?>
+			?>
 		</span>
 			
 		<p></p>
@@ -143,6 +143,10 @@ error_reporting(E_ALL);
 			
 				if (isset($_GET['game'])){
 					$selected_val = $_GET['game'];
+				}
+				
+				if(isset($_GET['submit2'])){
+					$search = $_GET['Name'];
 				}
 				
 				if (isset($_GET['sort']) && $_GET['sort'] == 'player')
