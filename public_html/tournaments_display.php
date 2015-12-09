@@ -20,7 +20,7 @@ session_start();
 <script type="text/javascript">
 $(document).ready(function() {
 	$('.update-bracket').click(function(event){
-		var val = <?php echo $id;?>
+var val = $('.tournament_id').val();
 		$.ajax({
 			url: 'scripts/saveTournament.php',
 			data: {'bracket': JSON.stringify(saveData), 'tournament_id' : val}
@@ -42,7 +42,6 @@ $(document).ready(function() {
 			<li><a id="games" href="games.php">Games</a></li>
 			<li class="active"><a id="tournaments" href="tournaments.php">Tournaments</a></li>
 			<li><a id="leaderboards" href="leaderboards.php">Leaderboards</a></li>
-			<li><a id="calenderPage" href="calenderPage.php">Calender</a></li>
 			<?php 
 				if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 					echo '<li><a id="profile" href="profile.php">Profile</a></li>';
@@ -71,6 +70,7 @@ $(document).ready(function() {
 	<?php 
 				if (isset($_SESSION["admin"]) && $_SESSION["admin"]) {
 					echo '<div id="tournament"></div>';
+					echo '<form> <input type="hidden" class="tournament_id" name="tournament_id" value="'.$id.'"></form>';
 					echo "<br>".'<input type="button" class="update-bracket" value="Update Bracket">';
 				}
 				else
