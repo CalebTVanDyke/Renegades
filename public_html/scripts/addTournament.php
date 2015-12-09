@@ -25,7 +25,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 //Insert tournament
-$query = "INSERT INTO Tournament (entries, date, tournament_type, price, game_id, name,open,bracket) VALUES ('".$max_size."','".$date."','".$type."','".$price."','".$game."', '".$name."',1,'empty');";
+$query = "INSERT INTO Tournament (entries, date, tournament_type, price, game_id, name,open,bracket) VALUES ('".$max_size."','".$date."','".$type."','".$price."','".$game_id."', '".$name."',1,'empty');";
 $sql->runQuery($query);
 
 //Get Tournament id
