@@ -38,7 +38,35 @@ error_reporting(E_ALL);
 			?>
 		</ul>
 	<div id="content">
-	
+		
+		<?php
+
+				$selected = NULL;
+				if (isset($_GET["game"])) {
+					$selected = $_GET["game"];
+				}
+				$sql = SqlConnect::getInstance();
+				$result = $sql->runQuery("SELECT name, featured, game_id, image_name FROM Game;");
+				$data = array();
+				$count = 0;
+				$featured = false;
+				$id = -1;
+				$image_name = NULL;
+				while ($row = $result->fetch_assoc()) {
+					if ($selected == NULL && $count == 0) {
+						$id = $row["game_id"];
+						$featured = $row["featured"];
+						$image_name = $row["image_name"];
+					}
+					$count++;
+					array_push($data, array("name" => $row["name"]));
+					if ($selected != NULL && $row["name"] == $selected) {
+						$id = $row["game_id"];
+						$featured = $row["featured"];
+						$image_name = $row["image_name"];
+					}
+				}
+			?>
 		<?php 
 			include_once ('../resources/sqlconnect.php');
 
