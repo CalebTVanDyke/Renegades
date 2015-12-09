@@ -41,7 +41,7 @@ session_start();
 		
 		
 		
-		<form action="addTournament.php" method="post">
+		<form action="scripts/addTournament.php" method="get">
 		Title of tournament: <br><input type="text" name="title"><br>
 		<input type="radio" name="type" value="double" checked>Double Elimination<br>
 		<input type="radio" name="type" value="single">Single Elimination<br>
