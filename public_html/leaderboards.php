@@ -103,6 +103,10 @@ error_reporting(E_ALL);
 		
 		<span class="searchingTitle">
 			<?php
+			if (isset($_GET['game'])){
+				$selected_val = $_GET['game'];
+			}
+				
 			echo ('<h3>'.$selected_val.' Leaderboards</h3>');
 			?>
 			<form action="leaderboards.php" method="post">
