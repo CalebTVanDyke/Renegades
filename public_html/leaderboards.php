@@ -173,11 +173,11 @@ error_reporting(E_ALL);
 				for ($i = 0; $i < $count2; $i++) {
 					if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 						
-						$results = $sql->runQuery("SELECT mg.member_id FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND game_id=" .$id. " AND (gp.platform_id=p.platform_id) AND mg.member_id != " .$_SESSION["id"].";");
+						$results = $sql->runQuery("SELECT m.member_id FROM db461rene.Member m WHERE m.player_tag !=  " .$_SESSION["player_tag"])." AND m.player_tag = " .($tData[$i]["m.player_tag"]).";");
 						
 						$mData = array();
 						while ($row2 = $results->fetch_row()) {
-							array_push($mData, array("mg.member_id" => $row2[0]));
+							array_push($mData, array("m.member_id" => $row2[0]));
 						}
 						var_dump($mData);
 						echo ('<tr><td><a href="profile.php?user=' . $mData[$i]['member_id'] . '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
