@@ -175,14 +175,14 @@ error_reporting(E_ALL);
 						
 						$result3 = $sql->runQuery("SELECT m.member_id FROM db461rene.Member m WHERE m.player_tag !=  '" .$_SESSION["player_tag"]. "' AND m.player_tag = '" .($tData[$i]["m.player_tag"]). "';");
 						//var_dump($tData[$i]["m.player_tag"]);
-						var_dump($result3);
+						//var_dump($result3);
 						$mData = array();
 						while ($row2 = $result3->fetch_row()) {
 							array_push($mData, array("m.member_id" => $row2[0]));
 						}
-						var_dump($row2);
+						//var_dump($row2);
 						var_dump($mData);
-						echo ('<tr><td><a href="profile.php?user=' . $mData[$i]['member_id'] . '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
+						echo ('<tr><td><a href="profile.php?user=' . $mData[$i]["m.member_id"] . '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 					}else{
 						echo ('<tr><td>' .($tData[$i]["m.player_tag"]). '</td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 					}
