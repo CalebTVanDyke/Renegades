@@ -41,13 +41,14 @@ session_start();
 		
 		
 		
-		<form action="tournament_create_bracket.php" method="post">
+		<form action="addTournament.php" method="post">
 		Title of tournament: <br><input type="text" name="title"><br>
 		<input type="radio" name="type" value="double" checked>Double Elimination<br>
 		<input type="radio" name="type" value="single">Single Elimination<br>
+		Max Entrants: <br><input type="integer" name="entrants"><br>
 		Price for Entry: <br><input type="integer" name="price"><br>
 		Game: <br><input type="text" name="game"><br>
-		Date: <br><input type="text" name="date"><br>
+		Date: <br><input type="date" name="date"><br>
 		<input type="submit" value="Create Bracket">
 	</form>
 	
