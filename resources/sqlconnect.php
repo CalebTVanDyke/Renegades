@@ -24,7 +24,7 @@ class SqlConnect {
         if (null === SqlConnect::$instance) {
             SqlConnect::$instance = new SqlConnect();
         }
-        
+
         return SqlConnect::$instance;
     }
 
@@ -39,15 +39,15 @@ class SqlConnect {
 			$this->username = "dbu461rene";
 			$this->database = "db461rene";
 			$this->password = "yk2Gtcej3UAr";
-			$this->connection = new mysqli($this->connUrl, $this->username, $this->password, $this->database);
-			
+			$this->connection = mysqli_connect($this->connUrl, $this->username, $this->password, $this->database);
+
 			if (mysqli_connect_errno()) {
 				throw new Exception("Failure to connect");
 			}
 		}
 		catch (Exception $e) {
 			// Zero is the default user, used for very low errors
-			
+
 			// Publisher::publishException($e->getTraceAsString(), $e->getMessage(), 0);
 			SqlConnect::$lastException = $e;
 			var_dump($this);
@@ -57,6 +57,11 @@ class SqlConnect {
 
 	public function runQuery($query) {
 		return $this->connection->query($query);
+	}
+
+	public function escape($str) {
+		SqlConnect::getInstance();
+		return mysqli_real_escape_string($this->connection, $str);
 	}
 }
 
