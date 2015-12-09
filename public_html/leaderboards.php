@@ -145,7 +145,7 @@ error_reporting(E_ALL);
 					$selected_val = $_GET['game'];
 				}
 				
-				if(isset($_GET['submit2'])){
+				if(isset($_GET['Name'])){
 					$search = $_GET['Name'];
 				}
 				
