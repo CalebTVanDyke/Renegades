@@ -182,7 +182,7 @@ error_reporting(E_ALL);
 						//var_dump($result3);
 						$mData = array();
 						while ($row2 = $result3->fetch_row()) {
-							array_push($mData, array("m.member_id" => $row2));
+							array_push($mData, array("m.member_id" => $row2[0]));
 						}
 						//var_dump($row2);
 						var_dump($mData);
