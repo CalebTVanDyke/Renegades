@@ -173,14 +173,20 @@ error_reporting(E_ALL);
 				for ($i = 0; $i < $count2; $i++) {
 					if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 						
-						$results = $sql->runQuery("SELECT mg.member_id FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND game_id=" .$id. " AND (gp.platform_id=p.platform_id) AND mg.member_id != " .$_SESSION["id"].";");
-						
+						$result3 = $sql->runQuery("SELECT m.member_id FROM db461rene.Member m WHERE m.player_tag = '" .($tData[$i]["m.player_tag"]). "';");
+						//var_dump($tData[$i]["m.player_tag"]);
+						//var_dump($result3);
 						$mData = array();
-						while ($row2 = $results->fetch_row()) {
-							array_push($mData, array("mg.member_id" => $row2[0]));
+						while ($row2 = $result3->fetch_row()) {
+							array_push($mData, array("m.member_id" => $row2));
 						}
+						//var_dump($row2);
 						var_dump($mData);
-						echo ('<tr><td><a href="profile.php?user=' . $mData[$i]['member_id'] . '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
+						if ($_SESSION["player_tag"] == $tData[$i]["m.player_tag"]){
+							echo ('<tr bgcolor="#FFCC99"><td><a href="profile.php?user=' .$mData[$i]['m.member_id']. '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
+						}else{
+							echo ('<tr><td><a href="profile.php?user=' .$mData[$i]['m.member_id']. '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
+						}
 					}else{
 						echo ('<tr><td>' .($tData[$i]["m.player_tag"]). '</td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 					}

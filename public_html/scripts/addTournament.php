@@ -8,6 +8,7 @@ $price = $_GET["price"];
 $name = $_GET["title"];
 $type = $_GET["type"];
 $date = $_GET["date"];
+$bracket = '{"teams":[["Team 1","Team 2"],["Team 3","Team 4"]],"results":[[[[0,0],[0,0]]]]}';
 //Reverse date for db format
 $date = strrev($date);
 $game = $_GET["game"];
@@ -25,7 +26,7 @@ while ($row = $result->fetch_assoc()) {
 }
 
 //Insert tournament
-$query = "INSERT INTO Tournament (entries, date, tournament_type, price, game_id, name,open,bracket) VALUES ('".$max_size."','".$date."','".$type."','".$price."','".$game_id."', '".$name."',1,'empty');";
+$query = "INSERT INTO Tournament (entries, date, tournament_type, price, game_id, name,open,bracket) VALUES ('".$max_size."','".$date."','".$type."','".$price."','".$game_id."', '".$name."',1,'$bracket');";
 $sql->runQuery($query);
 
 //Get Tournament id

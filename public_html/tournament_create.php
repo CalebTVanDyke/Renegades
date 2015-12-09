@@ -45,7 +45,7 @@ session_start();
 		Title of tournament: <br><input type="text" name="title"><br>
 		<input type="radio" name="type" value="double" checked>Double Elimination<br>
 		<input type="radio" name="type" value="single">Single Elimination<br>
-		Max Entrants: <br><input type="integer" name="entrants"><br>
+		Max Entrants: <br><input type="number" name="entrants" max="64"><br>
 		Price for Entry: <br><input type="integer" name="price"><br>
 		Game: <br><input type="text" name="game"><br>
 		Date: <br><input type="date" name="date"><br>
