@@ -198,6 +198,7 @@ session_start();
 			</tbody>
         </table>
 	</div>
+	</div>
 </div>
 </body>
 
