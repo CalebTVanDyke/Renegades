@@ -149,7 +149,7 @@ session_start();
 						while ($row2 = $result3->fetch_row()) {
 							array_push($mData, array("mg.member_id" => $row2[0]));
 						}
-						
+						var_dump($mData);
 						echo ('<tr><td><a href="profile.php?user=' . $mData[$i]['member_id'] . '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 					}else{
 						echo ('<tr><td>' .($tData[$i]["m.player_tag"]). '</td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
