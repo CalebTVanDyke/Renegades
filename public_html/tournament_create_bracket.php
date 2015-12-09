@@ -18,17 +18,16 @@ session_start();
 <script type="text/javascript" src="js/jquery.bracket.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/jquery.bracket.min.css" />
 <script type="text/javascript">
-$(document).ready(function(){
-    $('button').click(function(){
-        var clickBtnValue = $(this).val();
-        var ajaxurl = 'entrant_handler.php',
-        data =  {'action': clickBtnValue};
-        $.post(ajaxurl, data, function (response) {
-            // Response div goes here.
-            alert("action performed successfully");
-        });
-    });
-
+$(document).ready(function() {
+	$('.finish-bracket').click(function(event){
+		var val = $('.tournament_id').val();
+		$.ajax({
+			url: 'scripts/saveTournament.php',
+			data: {'bracket': JSON.stringify(saveData), 'tournament_id' : val}
+		}).done(function(response) {
+			console.log(response);
+		})
+	})
 });
 </script>
 </head>
@@ -56,6 +55,7 @@ $(document).ready(function(){
 	<div id="tournament"></div>
 	
 	<!--List of Entries and handling and finalize button-->
+	<label>List of Entrants</label>
 	<ol id="entrants">
 		<?php 
 		
@@ -78,7 +78,7 @@ $(document).ready(function(){
 			}
 			
 			
-			
+			//Display all currently entered entrants
 			$result = $sql->runQuery("SELECT member_id FROM MemberTournament WHERE tournament_id = '$tournament_id';");
 			while ($row = $result->fetch_assoc()) {
 				$member_id = $row["member_id"];
@@ -100,21 +100,27 @@ $(document).ready(function(){
 				if(!$joined)
 					echo '<form action="tournament_create_bracket.php" method="get">
 								<input type="hidden" name="action" value="Join">
-								<input type="hidden" name="tournament_id" value="'.$tournament_id.'">
+								<input type="hidden" class="tournament_id" name="tournament_id" value="'.$tournament_id.'">
 								<input type="submit" value="Join">
 						</form>';
 				else
 					echo '<form action="tournament_create_bracket.php" method="get">
 								<input type="hidden" name="action" value="Leave">
-								<input type="hidden" name="tournament_id" value="'.$tournament_id.'">
+								<input type="hidden" class="tournament_id" name="tournament_id" value="'.$tournament_id.'">
 								<input type="submit" value="Leave">
 						</form>';
 			}
 	?>
 	
-	<form action="" method="post">
-		<br><br><br><input type="submit" value="Finish Bracket">
-	</form>
+	<?php 
+		if (isset($_SESSION["admin"]) && $_SESSION["admin"]) {
+				echo '<input type="button" class="finish-bracket" value="Finish Bracket">'."<br>";
+				echo'<form action="tournaments_display.php?tournament_id='.$tournament_id["tournament_id"].'" method="post">
+					<input type="submit" value="Close Sign Ups">
+						</form>';
+		}
+	?>
+	
 	
 	
 <script>	
@@ -124,24 +130,31 @@ var saveData = {
       ["Team 1", "Team 2"], /* first matchup */
       ["Team 3", "Team 4"]  /* second matchup */
     ],
-    results : [[1,0], [2,7]]
+    results : [[0,0], [0,0]]
   }
- 
+  
+
 /* Called whenever bracket is modified
  *
  * data:     changed bracket object in format given to init
  * userData: optional data given when bracket is created.
  */
 function saveFn(data, userData) {
-  var json = jQuery.toJSON(data)
-  $('#saveOutput').text('POST '+userData+' '+json)
-  /* You probably want to do something like this
-  jQuery.ajax("rest/"+userData, {contentType: 'application/json',
-                                dataType: 'json',
-                                type: 'post',
-                                data: json})
-  */
+  //var json = jQuery.toJSON(data)
+  //$('#saveOutput').text('POST '+userData+' '+json)
+   /*$.ajax({
+        url: 'scripts/saveTournament.php',
+        type: 'POST',
+		dataType: 'json',
+        data: {tournament: json},
+        success: function(data) 
+            {
+				console.log(data);
+            }
+    });*/
 }
+
+
  
 $(function() {
     var container = $('#tournament')
@@ -149,18 +162,14 @@ $(function() {
       init: saveData,
       save: saveFn,
       userData: "http://myapi"})
- 
-    /* You can also inquiry the current data */
-    var data = container.bracket('data')
-    $('#dataOutput').text(jQuery.toJSON(data))
   })
   
 /*Skips the consolation round to determine 3rd and 4th place*/
-$(function() {
+/*$(function() {
     $('div#noConsolationRound .demo').bracket({
       skipConsolationRound: true,
       init: doubleEliminationData})
-  })
+  })*/
   </script>
 </div>
 

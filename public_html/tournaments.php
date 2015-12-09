@@ -41,7 +41,7 @@ session_start();
 		
 		
 		<?php 
-				if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"]) && isset($_SESSION["admin"])==1) {
+				if (isset($_SESSION["admin"]) && $_SESSION["admin"]) {
 					echo '<form action="tournament_create.php" method="post">
 					<input type="submit" value="Create New Tournament">
 						</form>';
