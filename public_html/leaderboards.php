@@ -185,7 +185,7 @@ error_reporting(E_ALL);
 						if ($_SESSION["player_tag"] == $tData[$i]["m.player_tag"]){
 							echo ('<tr bgcolor="#FFCC99"><td><a href="profile.php?user=' .$mData[$i]['m.member_id']. '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 						}else{
-							echo ('<tr><td><a href="profile.php?user=' .$mData[$i-1]['m.member_id']. '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
+							echo ('<tr><td><a href="profile.php?user=' .$mData[$i-2]['m.member_id']. '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 						}
 					}else{
 						echo ('<tr><td>' .($tData[$i]["m.player_tag"]). '</td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
