@@ -147,22 +147,22 @@ error_reporting(E_ALL);
 				
 				if (isset($_GET['sort']) && $_GET['sort'] == 'player')
 				{
-					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY m.player_tag;");
+					$result2 = $sql->runQuery("SELECT m.player_tag, m.member_id, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY m.player_tag;");
 				}
 				elseif (isset($_GET['sort']) && $_GET['sort'] == 'wins')
 				{
-					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY mg.wins DESC;");
+					$result2 = $sql->runQuery("SELECT m.player_tag, m.member_id, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY mg.wins DESC;");
 				}
 				elseif (isset($_GET['sort']) && $_GET['sort'] == 'losses')
 				{
-					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY mg.losses;");
+					$result2 = $sql->runQuery("SELECT m.player_tag, m.member_id, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY mg.losses;");
 				}elseif (isset($_GET['Name']))
 				{
-					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) AND (m.player_tag='".$search."');");
+					$result2 = $sql->runQuery("SELECT m.player_tag, m.member_id, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) AND (m.player_tag='".$search."');");
 					var_dump($result2);
 				}else
 				{
-					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY p.name ASC;");
+					$result2 = $sql->runQuery("SELECT m.player_tag, m.member_id, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY p.name ASC;");
 				}
 			
 				$count2 = 0;
@@ -170,30 +170,24 @@ error_reporting(E_ALL);
 				$lData = array();
 				$tData = array();
 				$pData = array();
+				$mData = array();
 				
 				while ($row = $result2->fetch_row()) {
 					array_push($tData, array("m.player_tag" => $row[0]));
-					array_push($wData, array("mg.wins" => $row[1]));
-					array_push($lData, array("mg.losses" => $row[2]));
-					array_push($pData, array("p.name" => $row[3]));
+					array_push($mData, array("m.member_id" => $row[1]));
+					array_push($wData, array("mg.wins" => $row[2]));
+					array_push($lData, array("mg.losses" => $row[3]));
+					array_push($pData, array("p.name" => $row[4]));
 					$count2++;
 				}
 				
 				for ($i = 0; $i < $count2; $i++) {
 					if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 						
-						$result3 = $sql->runQuery("SELECT m.member_id FROM db461rene.Member m WHERE m.player_tag = '" .($tData[$i]["m.player_tag"]). "';");
-						//var_dump($tData[$i]["m.player_tag"]);
-						//var_dump($result3);
-						$mData = array();
-						while ($row2 = $result3->fetch_row()) {
-							array_push($mData, array("m.member_id" => $row2[0]));
-						}
-						//var_dump($row2);
 						var_dump($mData);
 						if ($_SESSION["player_tag"] == $tData[$i]["m.player_tag"]){
 							echo ('<tr bgcolor="#FFCC99"><td><a href="profile.php?user=' .($mData[$i]['m.member_id']). '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
-						}else if($_SESSION["player_tag"] != $tData[$i]["m.player_tag"]){
+						}else{
 							echo ('<tr><td><a href="profile.php?user=' .($mData[$i]['m.member_id']). '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 						}
 					}else{
