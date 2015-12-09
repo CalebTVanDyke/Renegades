@@ -136,18 +136,18 @@ error_reporting(E_ALL);
 					$selected_val = $_GET['game'];
 				}
 				
-				if ($_GET['sort'] == 'player')
+				if (isset($_GET['sort']) && $_GET['sort'] == 'player')
 				{
 					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY m.player_tag;");
 				}
-				elseif ($_GET['sort'] == 'wins')
+				elseif (isset($_GET['sort']) && $_GET['sort'] == 'wins')
 				{
 					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY mg.wins;");
 				}
-				elseif ($_GET['sort'] == 'losses')
+				elseif (isset($_GET['sort']) && $_GET['sort'] == 'losses')
 				{
 					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY mg.losses;");
-				}elseif (isset($_POST['submit']))
+				}elseif (isset($_GET['sort']) && isset($_POST['submit']))
 				{
 					$search = $_POST['Name'];
 					
@@ -183,7 +183,7 @@ error_reporting(E_ALL);
 						//var_dump($row2);
 						var_dump($mData);
 						if ($_SESSION["player_tag"] == $tData[$i]["m.player_tag"]){
-							echo ('<tr bgcolor=#FFCC99"><td><a href="profile.php?user=' .($mData[$i]["m.member_id"]). '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
+							echo ('<tr bgcolor="#FFCC99"><td><a href="profile.php?user=' .($mData[$i]["m.member_id"]). '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 						}else{
 							echo ('<tr><td><a href="profile.php?user=' .($mData[$i]["m.member_id"]). '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 						}
