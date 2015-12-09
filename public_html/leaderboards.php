@@ -109,10 +109,10 @@ error_reporting(E_ALL);
 				
 			echo ('<h3>'.$selected_val.' Leaderboards</h3>');
 			?>
-			<form action="leaderboards.php" method="post">
+			<form action="leaderboards.php" method="get">
 					<input type="text" name="Name">
 					<!--<img src="../resources/game_images/Magnify Glass.jpg" alt="Submit" style="width:40px;height:30px;"/>-->
-					<input type="submit" value="Search">
+					<input type="submit" name="submit2" value="Search">
 					</input>
 			</form>
 		</span>
@@ -151,9 +151,9 @@ error_reporting(E_ALL);
 				elseif (isset($_GET['sort']) && $_GET['sort'] == 'losses')
 				{
 					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY mg.losses;");
-				}elseif (isset($_GET['sort']) && isset($_POST['submit']))
+				}elseif (isset($_GET['sort']) && isset($_GET['submit2']))
 				{
-					$search = $_POST['Name'];
+					$search = $_GET['Name'];
 					
 					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) AND (m.player_tag='".$search."') ORDER BY m.player_tag;");
 				}else{
@@ -188,7 +188,7 @@ error_reporting(E_ALL);
 						var_dump($mData);
 						if ($_SESSION["player_tag"] == $tData[$i]["m.player_tag"]){
 							echo ('<tr bgcolor="#FFCC99"><td><a href="profile.php?user=' .($mData[$i]["m.member_id"]). '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
-						}else if($_SESSION["player_tag"]){
+						}else{
 							echo ('<tr><td><a href="profile.php?user=' .($mData[$i]["m.member_id"]). '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 						}
 					}else{
