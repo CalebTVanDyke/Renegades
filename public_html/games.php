@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 ?>
 <!DOCTYPE html>
@@ -42,7 +42,7 @@ $(document).ready(function() {
 			<li><a id="tournaments" href="tournaments.php">Tournaments</a></li>
 			<li><a id="leaderboards" href="leaderboards.php">Leaderboards</a></li>
 			<li><a id="calenderPage" href="calenderPage.php">Calender</a></li>
-			<?php 
+			<?php
 				if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 					echo '<li><a id="profile" href="profile.php">Profile</a></li>';
 				}
@@ -57,28 +57,31 @@ $(document).ready(function() {
 					$selected = $_GET["game"];
 				}
 				$sql = SqlConnect::getInstance();
-				$result = $sql->runQuery("SELECT name, featured, game_id FROM Game;");
+				$result = $sql->runQuery("SELECT name, featured, game_id, image_name FROM Game;");
 				$data = array();
 				$count = 0;
 				$featured = false;
 				$id = -1;
+				$image_name = NULL;
 				while ($row = $result->fetch_assoc()) {
 					if ($selected == NULL && $count == 0) {
 						$id = $row["game_id"];
 						$featured = $row["featured"];
+						$image_name = $row["image_name"];
 					}
 					$count++;
 					array_push($data, array("name" => $row["name"]));
 					if ($selected != NULL && $row["name"] == $selected) {
 						$id = $row["game_id"];
 						$featured = $row["featured"];
+						$image_name = $row["image_name"];
 					}
 				}
 			?>
 			<div class="row">
 				<div class="col-md-4">
 					<ul class="nav nav-pills">
-						<?php 
+						<?php
 							for ($i = 0; $i < $count; $i++) {
 								if (($i == 0 && $selected == NULL) || $data[$i]['name'] == $selected) {
 									echo '<li role="presentation" class="active"><a href="games.php?game=' . $data[$i]['name'] . '">' . $data[$i]['name'] . '</a></li>';
@@ -97,7 +100,7 @@ $(document).ready(function() {
 							echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addGame">Add Game</button> ';
 							echo '<label>';
 							if ($featured) {
-								echo '<input checked type="checkbox" value="' . $id . '" class="feature-game">'; 
+								echo '<input checked type="checkbox" value="' . $id . '" class="feature-game">';
 							} else {
 								echo '<input type="checkbox" value="' . $id . '" class="feature-game">';
 							}
@@ -108,7 +111,7 @@ $(document).ready(function() {
 					?>
 					<?php
 						echo '<h3>' . $selected . '</h3>';
-						echo '<img class="img-responsive" src="../resources/game_images/'.$selected.'.jpg" alt="">';
+						echo '<img class="img-responsive" src="../resources/game_images/'.$image_name.'" alt="">';
 						$result = $sql->runQuery("SELECT description, genre, release_date, max_players FROM Game where name='" . $selected . "'");
 						while ($row = $result->fetch_assoc()) {
 							echo '<h4>Description</h4>';
@@ -124,6 +127,17 @@ $(document).ready(function() {
 							echo '<p>' . $row['max_players'] . '</p>';
 						}
 					?>
+					<?php
+						if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
+							echo '<h4>Other users</h4>';
+							echo '<ul>';
+							$result = $sql->runQuery("SELECT mg.member_id, m.player_tag FROM MemberGame mg, Member m WHERE game_id=" . $id . " AND mg.member_id != " . $_SESSION["id"] . " AND mg.member_id=m.member_id;");
+							while ($row = $result->fetch_assoc()) {
+								echo '<li><a href="profile.php?user=' . $row['member_id'] . '">' . $row["player_tag"] . '</a>';
+							}
+							echo '</ul>';
+						}
+					?>
 				</div>
 			</div>
 		</div>
@@ -131,7 +145,7 @@ $(document).ready(function() {
 	<footer class="footer">
 		<div class="container">
 			<p class="text-muted">
-				<?php 
+				<?php
 					if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 						echo '<a href="logout.php"> Log out</a>';
 					} else {

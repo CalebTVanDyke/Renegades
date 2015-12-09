@@ -42,6 +42,7 @@ $(document).ready(function() {
 			<li><a id="games" href="games.php">Games</a></li>
 			<li class="active"><a id="tournaments" href="tournaments.php">Tournaments</a></li>
 			<li><a id="leaderboards" href="leaderboards.php">Leaderboards</a></li>
+			<li><a id="calenderPage" href="calenderPage.php">Calender</a></li>
 			<?php 
 				if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 					echo '<li><a id="profile" href="profile.php">Profile</a></li>';
