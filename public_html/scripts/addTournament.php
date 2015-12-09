@@ -37,6 +37,6 @@ while ($row = $result->fetch_assoc()) {
 	$id = $row["tournament_id"];
 }
 echo "max size".$max_size."<br>price".$price."<br>name".$name."<br>type".$type."<br>date".$date."<br>game".$game;
-//header('Location: ../tournament_create_bracket.php?tournament_id=' . $id);
-//die();
+header('Location: ../tournament_create_bracket.php?tournament_id=' . $id);
+die();
 ?>
