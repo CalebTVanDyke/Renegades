@@ -49,9 +49,9 @@ $(document).ready(function() {
 				}
 			?>
 		</ul>
-	<div id="content>
 	
-		<h2><?php echo $_POST["title"]; ?></h2>
+	
+		<h2><?php echo $_GET["title"]; ?></h2>
 
 		<!--Bracket Display-->
 		<div id="tournament"></div>
@@ -109,6 +109,7 @@ $(document).ready(function() {
 					else
 						echo '<form action="tournament_create_bracket.php" method="get">
 									<input type="hidden" name="action" value="Leave">
+									<input type="hidden" name="title" value="'.$_GET["title"].'">
 									<input type="hidden" class="tournament_id" name="tournament_id" value="'.$tournament_id.'">
 									<input type="submit" value="Leave">
 							</form>';
@@ -174,7 +175,6 @@ $(document).ready(function() {
 		  init: doubleEliminationData})
 	  })*/
 	  </script>
-	</div>
 </div>
 	<footer class="footer">
 			<div class="container">
