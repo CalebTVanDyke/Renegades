@@ -163,6 +163,7 @@ error_reporting(E_ALL);
 				}elseif (isset($_GET['sort']) && isset($_GET['Name']))
 				{
 					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) AND (m.player_tag='".$search."');");
+					var_dump($result2);
 				}else
 				{
 					$result2 = $sql->runQuery("SELECT m.player_tag, mg.wins, mg.losses, p.name FROM db461rene.Game g, db461rene.Member m, db461rene.MemberGame mg, db461rene.Platform p, db461rene.GamePlatform gp WHERE (g.name='".$selected_val."') AND (m.member_id=mg.member_id) AND (g.game_id=mg.game_id) AND (g.game_id=gp.game_id) AND (gp.platform_id=p.platform_id) ORDER BY p.name ASC;");
