@@ -82,7 +82,13 @@ $user = $all_games->fetch_assoc();
                 <div class="row">
                     <div class="col-sm-12 col-md-4" style="text-align: center;">
                         <div id="profilePicture" class="centerBlock">
-                            <img src="http://ui.uniteddogs.com/img/ui/user_icons/_no_avatar_f_180x180.png" class="img-thumbnail">
+							<?php
+							if ($user['avatar']){
+                            	echo '<img src="../resources/avatars/' . $user['avatar'] . '" class="img-thumbnail">';
+							} else {
+								echo '<img src="http://ui.uniteddogs.com/img/ui/user_icons/_no_avatar_f_180x180.png" class="img-thumbnail">';
+							}
+							?>
                             <button id="uploadProfilePictureButton" class="btn btn-default" data-toggle="modal" data-target="#uploadProfilePicture" style="display: none;"> Change </button>
                         </div>
                     </div>
@@ -225,7 +231,7 @@ $user = $all_games->fetch_assoc();
                         <h4 class="modal-title" id="myModalLabel">Change Profile Picture</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="uploadProfilePictureForm" action="scripts/uploadProfilePicture.php" method="POST" enctype="multipart/form-data">
+                        <form id="uploadProfilePictureForm" action="scripts/addProfilePic.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Image<input name="image" type="file" class="form-control"></label>
                             </div>
@@ -233,7 +239,7 @@ $user = $all_games->fetch_assoc();
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" form="addGameForm" class="btn btn-primary">Save changes</button>
+                        <button type="submit" form="uploadProfilePictureForm" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
