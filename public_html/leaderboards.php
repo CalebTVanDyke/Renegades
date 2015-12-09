@@ -145,6 +145,8 @@ session_start();
 					if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 						$result = $sql->runQuery("SELECT mg.member_id, m.player_tag FROM MemberGame mg, Member m WHERE game_id=" . $id . " AND mg.member_id != " . $_SESSION["id"] . " AND mg.member_id=m.member_id;");
 						
+						$row = $result->fetch_assoc();
+						
 						echo ('<tr><td><a href="profile.php?user=' . $row['member_id'] . '">' .($tData[$i]["m.player_tag"]). '</a></td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
 					}else{
 						echo ('<tr><td>' .($tData[$i]["m.player_tag"]). '</td><td>' .($wData[$i]["mg.wins"]). '</td><td>' .($lData[$i]["mg.losses"]). '</td><td>' .($pData[$i]["p.name"]). '</td></tr>');
