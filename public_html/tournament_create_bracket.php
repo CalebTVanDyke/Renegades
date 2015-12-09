@@ -50,6 +50,7 @@ $(document).ready(function() {
 			?>
 		</ul>
 	
+		<div id="content">
 		<?php
 			include_once ('../resources/sqlconnect.php');
 			$tournament_id = $_GET["tournament_id"];
@@ -222,6 +223,7 @@ $(function() {
       init: saveData})
   })
 	  </script>
+	</div>
 </div>
 	<footer class="footer">
 			<div class="container">
