@@ -1,5 +1,5 @@
 <?php
-
+// Uploads the profiles picture to the server and updates database
 include_once ('../../resources/sqlconnect.php');
 session_start();
 $sql = SqlConnect::getInstance();

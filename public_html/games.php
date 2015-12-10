@@ -51,7 +51,7 @@ $(document).ready(function() {
 		<div id="content">
 			<?php
 				include_once ('../resources/sqlconnect.php');
-
+				// get game info for the selected game or load the first game
 				$selected = NULL;
 				if (isset($_GET["game"])) {
 					$selected = $_GET["game"];
@@ -95,6 +95,7 @@ $(document).ready(function() {
 				</div>
 				<div class="col-md-8">
 					<?php
+						// Display admin panel if user is admin
 						if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 							echo '<div id="admin-panel">';
 							echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addGame">Add Game</button> ';
@@ -110,6 +111,7 @@ $(document).ready(function() {
 						}
 					?>
 					<?php
+						// Display selected game
 						echo '<h3>' . $selected . '</h3>';
 						echo '<img class="img-responsive" src="../resources/game_images/'.$image_name.'" alt="">';
 						$result = $sql->runQuery("SELECT description, genre, release_date, max_players FROM Game where name='" . $selected . "'");

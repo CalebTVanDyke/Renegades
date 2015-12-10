@@ -4,7 +4,7 @@ include_once ("authUtil.php");
 include_once ("authConfig.php");
 
 /**
-* 
+* User class used to registeer and login a user
 */
 class User
 {
@@ -46,7 +46,7 @@ class User
 
 	/**
 	 * Logins the user
-	 * @return null on success and string containing error message on error. 
+	 * @return null on success and string containing error message on error.
 	 */
 	public function login() {
 		session_start();
