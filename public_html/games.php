@@ -99,6 +99,8 @@ $(document).ready(function() {
 						if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 							echo '<div id="admin-panel">';
 							echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addGame">Add Game</button> ';
+							echo '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editGame">Edit Game</button> ';
+							echo '<a href="scripts/deleteGame.php?toDelete='.$id.'"><button type="button" class="btn btn-danger" data-toggle="modal">Delete Game</button></a> ';
 							echo '<label>';
 							if ($featured) {
 								echo '<input checked type="checkbox" value="' . $id . '" class="feature-game">';
@@ -117,16 +119,17 @@ $(document).ready(function() {
 						$result = $sql->runQuery("SELECT description, genre, release_date, max_players FROM Game where name='" . $selected . "'");
 						while ($row = $result->fetch_assoc()) {
 							echo '<h4>Description</h4>';
-							echo '<p>' . $row['description'] . '</p>';
-
+							$description = $row['description'];
+							echo '<p>' . $description . '</p>';
 							echo '<h4>Genre</h4>';
-							echo '<p>' . $row['genre'] . '</p>';
-
+							$genre = $row['genre'];
+							echo '<p>' . $genre . '</p>';
 							echo '<h4>Release Date</h4>';
-							echo '<p>' . $row['release_date'] . '</p>';
-
+							$date = $row['release_date'];
+							echo '<p>' . $date . '</p>';
 							echo '<h4>Max Players</h4>';
-							echo '<p>' . $row['max_players'] . '</p>';
+							$max_players = $row['max_players'];
+							echo '<p>' . $max_players . '</p>';
 						}
 					?>
 					<?php
@@ -190,6 +193,42 @@ $(document).ready(function() {
 			  <div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					<button type="submit" form="addGameForm" class="btn btn-primary">Save changes</button>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="editGame" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Add Game</h4>
+			  </div>
+			  <div class="modal-body">
+					<form id="editGameForm" action="scripts/editGame.php" method="POST" enctype="multipart/form-data">
+						<div class="form-group">
+							<label>Game Title <input name="title" type="text" class="form-control" value="<?php echo $selected; ?>"></label>
+						</div>
+						<div class="form-group">
+							<label>Release Date <input name="releaseDate" type="date" class="form-control" value="<?php echo $date; ?>"></label>
+						</div>
+						<div class="form-group">
+							<label>Genre <input name="genre" type="text" class="form-control" value="<?php echo $genre; ?>"></label>
+						</div>
+						<div class="max-players">
+							<label>Max Players <input name="maxPlayers" type="number" class="form-control" value="<?php echo $max_players ;?>"></label>
+						</div>
+						<div class="form-group">
+							<label>Description<textarea name="description" class="form-control"><?php echo $description; ?></textarea></label>
+						</div>
+						<div class="form-group">
+							<label>New Image<input name="image" type="file" class="form-control"></label>
+						</div>
+					</form>
+			  </div>
+			  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="submit" form="editGameForm" class="btn btn-primary" name="id" value="<?php echo $id; ?>">Save changes</button>
 			  </div>
 			</div>
 		</div>
