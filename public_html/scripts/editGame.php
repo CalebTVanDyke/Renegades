@@ -9,6 +9,10 @@ $description = $sql->escape($_POST["description"]);
 $genre = $sql->escape($_POST["genre"]);
 $maxPlayers = $_POST["maxPlayers"];
 $id = $_POST["id"];
+if ($id == "" || $title == "" || $release == "" || $description == "" || $genre == "" || $maxPlayers == "") {
+    header('Location: ../games.php?error=' . "Please fill in all fields in the form.");
+    die();
+}
 if (isset($_FILES["image"]) && $_FILES["image"]["name"] != "") {
     $fileName = basename($_FILES["image"]["name"]);
     $query = "UPDATE Game SET name='".$title."', genre='".$genre."', release_date='".$release."', description='".$description."', max_players='".$maxPlayers."', image_name='".$fileName."' WHERE game_id=" . $id . ";";

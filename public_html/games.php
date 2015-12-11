@@ -24,7 +24,6 @@ $(document).ready(function() {
 			url: 'scripts/setFeatured.php',
 			data: {'id' : val, 'setTo' : checked}
 		}).done(function(response) {
-			console.log(response);
 		})
 	})
 });
@@ -95,6 +94,9 @@ $(document).ready(function() {
 				</div>
 				<div class="col-md-8">
 					<?php
+						if (isset($_GET['error'])) {
+							echo '<div class="alert alert-danger" role="alert" id="alert">' . $_GET["error"] . '</div>';
+						}
 						// Display admin panel if user is admin
 						if (isset($_SESSION['admin']) && $_SESSION['admin']) {
 							echo '<div id="admin-panel">';
