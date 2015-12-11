@@ -1,4 +1,6 @@
 <?php
+
+//Use session and check to make sure user is logged in
 session_start();
 if (!isset($_SESSION["player_tag"]) || !isset($_SESSION["id"])) {
 	header("Location: index.php");
@@ -13,12 +15,12 @@ if (isset($_GET["user"])) {
 	$id = $_SESSION["id"];
 }
 
+//Get sql instance to query database
 $sql = SqlConnect::getInstance();
 
+//Get logged in user's information from database
 $query = "SELECT player_tag, email, avatar, description FROM Member m WHERE m.member_id = " . $id . ";";
-
 $all_games = $sql->runQuery($query);
-
 $user = $all_games->fetch_assoc();
 
 ?>
@@ -40,6 +42,7 @@ $user = $all_games->fetch_assoc();
     $(document).ready(function() {
         $('.carousel').carousel();
 
+//        Show buttons when hovering over
         $('#profilePicture').hover(function() {
             $('#uploadProfilePictureButton').fadeIn();
         }, function() {
@@ -73,6 +76,7 @@ $user = $all_games->fetch_assoc();
                 <li><a id="leaderboards" href="leaderboards.php">Leaderboards</a></li>
 				<li><a id="calenderPage" href="calenderPage.php">Calender</a></li>
                 <?php
+                    // Show Profile tab in menu if logged in
                     if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
                         echo '<li class="active"><a id="profile" href="profile.php">Profile</a></li>';
                     }
@@ -83,6 +87,7 @@ $user = $all_games->fetch_assoc();
                     <div class="col-sm-12 col-md-4" style="text-align: center;">
                         <div id="profilePicture" class="centerBlock">
 							<?php
+                            //display user profile picture if exists. Otherwise use default photo
 							if ($user['avatar']){
                             	echo '<img src="../resources/avatars/' . $user['avatar'] . '" class="img-thumbnail">';
 							} else {
@@ -106,6 +111,7 @@ $user = $all_games->fetch_assoc();
                                     <div class="col-sm-11">
                                         <p>
                                             <?php
+                                            //Show user bio
                                             if(strlen($user["description"]) > 0){
                                                 echo $user["description"];
                                             }
@@ -140,6 +146,7 @@ $user = $all_games->fetch_assoc();
                                 <div class="col-sm-12">
                                     <br>
 									<?php
+                                        //Button to show modal dialog to add games to profile
 										if (isset($_SESSION["id"]) && $id == $_SESSION["id"])
                                     		echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addGame">Edit Games</button>';
 									?>
@@ -151,6 +158,7 @@ $user = $all_games->fetch_assoc();
                         <h3>My Games</h3>
 
                             <?php
+                            //Get game information for games the user plays
                             $user_games = $sql->runQuery("SELECT mg.game_id, g.name, g.image_name FROM MemberGame mg INNER JOIN Game g ON mg.game_id = g.game_id WHERE mg.member_id = ". $_SESSION['id'] .";");
 
                             while($row = $user_games->fetch_assoc()){
@@ -202,15 +210,14 @@ $user = $all_games->fetch_assoc();
                             while($row = $user_games->fetch_assoc()){
                                 array_push($user_games_array, $row['game_id']);
                             }
-                            //echo count($user_games_array);
 
-                            while ($row = $all_games->fetch_assoc()) {
-                                if(in_array($row['game_id'], $user_games_array)){
+                            while ($row = $all_games->fetch_assoc()) { //Goes through all games
+                                if(in_array($row['game_id'], $user_games_array)){ //If user already has game on profile add a checked checkbox
                                     echo '<div class="form-group">';
                                     echo '<label><input type="checkbox" name="game' . $row['game_id'] . '" value="' . $row['game_id'] . '" checked>' . $row['name'] . '</label>';
                                     echo '</div>';
                                 }
-                                else{
+                                else{ //Otherwise add a unchecked checkbox
                                     echo '<div class="form-group">';
                                     echo '<label><input type="checkbox" name="game' . $row['game_id'] . '" value="' . $row['game_id'] . '">' . $row['name'] . '</label>';
                                     echo '</div>';
@@ -228,7 +235,7 @@ $user = $all_games->fetch_assoc();
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Modal for uploading new profile picture -->
         <div class="modal fade" id="uploadProfilePicture" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -250,7 +257,7 @@ $user = $all_games->fetch_assoc();
                 </div>
             </div>
         </div>
-        <!-- Modal -->
+        <!-- Modal for editing bio -->
         <div class="modal fade" id="editBio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -262,8 +269,8 @@ $user = $all_games->fetch_assoc();
                         <form id="editBioForm" action="scripts/editBio.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Bio</label>
-
                                     <?php
+                                    // Show bio for user if exists
                                     $result = $sql->runQuery("SELECT description FROM Member WHERE member_id=". $_SESSION['id'] .";");
                                     $row = $result->fetch_assoc();
 

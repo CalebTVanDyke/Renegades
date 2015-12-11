@@ -4,20 +4,20 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Renegades</title>
-	<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" media="all" href="css/main.css">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-	
-	
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Renegades</title>
+<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="all" href="css/main.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
 <script type="text/javascript" src="js/jquery.bracket.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/jquery.bracket.min.css" />
 <script type="text/javascript">
+//Saves the current status of the bracket into the database
+//whenever the Save Bracket button is pushed.
 $(document).ready(function() {
 	$('.finish-bracket').click(function(event){
 		var val = $('.tournament_id').val();
@@ -37,6 +37,7 @@ $(document).ready(function() {
 	<div class="header">
 			<h1>Game Renegades</h1>
 	</div>
+		<!--Tabs to other pages-->
 		<ul class="nav nav-tabs nav-justified">
 			<li class=""><a id="home" href="index.php">Home</a></li>
 			<li><a id="games" href="games.php">Games</a></li>
@@ -83,6 +84,7 @@ $(document).ready(function() {
 			}
 		?>
 		
+		<!--Name of the tournament and the game the tournament is for-->
 		<h2><?php echo $name; ?></h2>
 		<h3><?php echo $game; ?></h3>
 		
@@ -99,7 +101,7 @@ $(document).ready(function() {
 		<label>List of Participates</label>
 		<ol id="entrants">
 			<?php
-				//Run either insert or delete queries per request
+				//Run either insert or delete queries on value of action
 				if (isset($_GET['action'])) {
 				switch ($_GET['action']) {
 					case 'Join':
@@ -113,6 +115,7 @@ $(document).ready(function() {
 				
 				
 				//Display all currently entered entrants
+				//Keeps a count of how many entrants there are
 				$result = $sql->runQuery("SELECT member_id FROM MemberTournament WHERE tournament_id = '$tournament_id';");
 				while ($row = $result->fetch_assoc()) {
 					$member_id = $row["member_id"];
@@ -127,13 +130,16 @@ $(document).ready(function() {
 			?>
 		</ol>
 		
+		<!--Number of entered players and max limit-->
 		<br><label>Current Number of Players: <?php echo $count."/".$max_entries;?></label><br><br>
 		
-		<!--Displays join button if current user has not joined yet. Leave button otherwise -->
+		<!--Displays join button if current user has not joined yet. Leave button if they have already joined. Displays
+			"Full!" if the user has not joined but max limit of entrants have been reached.-->
 		<?php
 			if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 					echo '<div id="player_tag" style="display: none;">'.$_SESSION["player_tag"].'</div>';
 					echo '<div id="member_id" style="display: none;">'.$_SESSION["member_id"].'</div>';
+					//Hidden html values used for Join and Leave functionality
 					if(!$joined && $count < $max_entries)
 						echo '<form action="tournament_create_bracket.php" method="get">
 									<input type="hidden" name="action" value="Join">
@@ -152,6 +158,8 @@ $(document).ready(function() {
 		?>
 		
 		<?php 
+			//If admin is logged in, display "Save Bracket" button and "Close Sign Ups" button
+			//"Close Sign Ups" button submits the tournaments' id to the display tournament page and redirects admin there.
 			if (isset($_SESSION["admin"]) && $_SESSION["admin"]) {
 					echo '<input type="button" class="finish-bracket" value="Save Bracket">'."<br>";
 					echo'<form action="scripts/closeSignUp.php?tournament_id='.$tournament_id.'" method="post">
@@ -162,32 +170,17 @@ $(document).ready(function() {
 		
 		
 		
-	<script>	
-	  var saveData = <?php echo $bracket?>
+<script>	
+//Contains the current form of the bracket 
+var saveData = <?php echo $bracket?>
 
-	/* Called whenever bracket is modified
-	 *
-	 * data:     changed bracket object in format given to init
-	 * userData: optional data given when bracket is created.
-	 */
-	function saveFn(data, userData) {
-	  //var json = jQuery.toJSON(data)
-	  //$('#saveOutput').text('POST '+userData+' '+json)
-	   /*$.ajax({
-			url: 'scripts/saveTournament.php',
-			type: 'POST',
-			dataType: 'json',
-			data: {tournament: json},
-			success: function(data) 
-				{
-					console.log(data);
-				}
-		});*/
-	}
-
-
+function saveFn(data, userData) {
+	 //Empty function
+	 //Allows editing of bracket UI
+}
 	 
  /*Tournament initializer for admin*/
+ //Allows editing of team names and size of bracket
 $(function() {
 	//Check if saveData = null
 	if(saveData==null)
@@ -207,6 +200,8 @@ $(function() {
   })
   
  /*Tournament initialize for users or guests*/
+ //Displays bracket and the inputed teams by the admin
+ //Does not allow editing of the bracket UI
 $(function() {
 //Check if saveData = null
 	if(saveData==null)
@@ -222,7 +217,7 @@ $(function() {
     container.bracket({
       init: saveData})
   })
-	  </script>
+</script>
 	</div>
 </div>
 	<footer class="footer">
