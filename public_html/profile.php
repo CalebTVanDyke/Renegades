@@ -7,7 +7,11 @@ if (!isset($_SESSION["player_tag"]) || !isset($_SESSION["id"])) {
 
 include_once ('../resources/sqlconnect.php');
 
-$id = $_SESSION["id"];
+if (isset($_GET["user"])) {
+	$id = $_GET["user"];
+} else {
+	$id = $_SESSION["id"];
+}
 
 $sql = SqlConnect::getInstance();
 
@@ -19,7 +23,7 @@ $user = $all_games->fetch_assoc();
 
 ?>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
     <head>
     <title>Renegades</title>
     <link rel="stylesheet" type="text/css" media="all"
@@ -40,6 +44,12 @@ $user = $all_games->fetch_assoc();
             $('#uploadProfilePictureButton').fadeIn();
         }, function() {
             $('#uploadProfilePictureButton').fadeOut();
+        });
+
+        $('#bio').hover(function() {
+            $('#editBioButton').fadeIn();
+        }, function() {
+            $('#editBioButton').fadeOut();
         });
     });
     </script>
@@ -72,8 +82,16 @@ $user = $all_games->fetch_assoc();
                 <div class="row">
                     <div class="col-sm-12 col-md-4" style="text-align: center;">
                         <div id="profilePicture" class="centerBlock">
-                            <img src="http://ui.uniteddogs.com/img/ui/user_icons/_no_avatar_f_180x180.png" class="img-thumbnail">
-                            <button id="uploadProfilePictureButton" class="btn btn-default" data-toggle="modal" data-target="#uploadProfilePicture" style="display: none;"> Change... </button>
+							<?php
+							if ($user['avatar']){
+                            	echo '<img src="../resources/avatars/' . $user['avatar'] . '" class="img-thumbnail">';
+							} else {
+								echo '<img src="http://ui.uniteddogs.com/img/ui/user_icons/_no_avatar_f_180x180.png" class="img-thumbnail">';
+							}
+							if (isset($_SESSION["id"]) && $id == $_SESSION["id"]) {
+                            	echo '<button id="uploadProfilePictureButton" class="btn btn-default" data-toggle="modal" data-target="#uploadProfilePicture" style="display: none;"> Change </button>';
+							}
+							?>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-8" style="height: 100%;;">
@@ -81,11 +99,11 @@ $user = $all_games->fetch_assoc();
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <h2 style="margin-top: 0;"><?php echo $_SESSION["player_tag"];?></h2>
+                                        <h2 style="margin-top: 0;"><?php echo $user["player_tag"];?></h2>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-12">
+                                <div class="row" id="bio">
+                                    <div class="col-sm-11">
                                         <p>
                                             <?php
                                             if(strlen($user["description"]) > 0){
@@ -96,6 +114,13 @@ $user = $all_games->fetch_assoc();
                                             }
                                             ?>
                                         </p>
+                                    </div>
+                                    <div class="col-sm-1">
+										<?php
+											if (isset($_SESSION["id"]) && $id == $_SESSION["id"]) {
+                                        		echo '<button id="editBioButton" class="btn btn-default" data-toggle="modal" data-target="#editBio" style="display: none;"> Change </button>';
+											}
+										?>
                                     </div>
                                 </div>
                             </div>
@@ -114,8 +139,11 @@ $user = $all_games->fetch_assoc();
                             <div class="row">
                                 <div class="col-sm-12">
                                     <br>
-                                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#addGame">Edit Games</button>
-                                </div>
+									<?php
+										if (isset($_SESSION["id"]) && $id == $_SESSION["id"])
+                                    		echo '<button type="button" class="btn btn-default" data-toggle="modal" data-target="#addGame">Edit Games</button>';
+									?>
+								</div>
                             </div>
                         </div>
                     </div>
@@ -123,14 +151,14 @@ $user = $all_games->fetch_assoc();
                         <h3>My Games</h3>
 
                             <?php
-                            $user_games = $sql->runQuery("SELECT mg.game_id, g.name FROM MemberGame mg INNER JOIN Game g ON mg.game_id = g.game_id WHERE mg.member_id = ". $_SESSION['id'] .";");
+                            $user_games = $sql->runQuery("SELECT mg.game_id, g.name, g.image_name FROM MemberGame mg INNER JOIN Game g ON mg.game_id = g.game_id WHERE mg.member_id = ". $_SESSION['id'] .";");
 
                             while($row = $user_games->fetch_assoc()){
                                 echo '<div class="row"> <div class="col-sm-4">';
-                                echo '<img class="img-responsive" src="../resources/game_images/'.$row['name'].'.jpg" alt="">';
+                                echo '<img class="img-responsive" src="../resources/game_images/'.$row['image_name'].'" alt="">';
                                 echo '</div>';
                                 echo '<div class="col-sm-8">';
-                                echo '<span><a href="games.php?game='. $row[name] .'">'. $row['name'] .'</a></span>';
+                                echo '<span><a href="games.php?game='. $row['name'] .'">'. $row['name'] .'</a></span>';
                                 echo '</div>';
                                 echo '</div>';
                                 echo '<br>';
@@ -209,7 +237,7 @@ $user = $all_games->fetch_assoc();
                         <h4 class="modal-title" id="myModalLabel">Change Profile Picture</h4>
                     </div>
                     <div class="modal-body">
-                        <form id="uploadProfilePictureForm" action="scripts/uploadProfilePicture.php" method="POST" enctype="multipart/form-data">
+                        <form id="uploadProfilePictureForm" action="scripts/addProfilePic.php" method="POST" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Image<input name="image" type="file" class="form-control"></label>
                             </div>
@@ -217,7 +245,38 @@ $user = $all_games->fetch_assoc();
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" form="addGameForm" class="btn btn-primary">Save changes</button>
+                        <button type="submit" form="uploadProfilePictureForm" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="editBio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Change Bio</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editBioForm" action="scripts/editBio.php" method="POST" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label>Bio</label>
+
+                                    <?php
+                                    $result = $sql->runQuery("SELECT description FROM Member WHERE member_id=". $_SESSION['id'] .";");
+                                    $row = $result->fetch_assoc();
+
+                                    $bio =  $row['description'];
+                                    ?>
+                                <textarea name="bio" type="text" class="form-control"><?php echo $bio ?></textarea>
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" form="editBioForm" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>

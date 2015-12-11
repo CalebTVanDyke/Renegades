@@ -37,17 +37,18 @@ session_start();
 			?>
 		</ul>
 		<div id="content">
-		</div>
 		
 		
 		
-		<form action="tournament_create_bracket.php" method="post">
+		
+		<form action="scripts/addTournament.php" method="get">
 		Title of tournament: <br><input type="text" name="title"><br>
 		<input type="radio" name="type" value="double" checked>Double Elimination<br>
 		<input type="radio" name="type" value="single">Single Elimination<br>
+		Max Entrants: <br><input type="number" name="entrants" max="64" min ="2"><br>
 		Price for Entry: <br><input type="integer" name="price"><br>
 		Game: <br><input type="text" name="game"><br>
-		Date: <br><input type="text" name="date"><br>
+		Date: <br><input type="date" name="date"><br>
 		<input type="submit" value="Create Bracket">
 	</form>
 	
@@ -57,6 +58,7 @@ session_start();
 	<label><input id="consolation" type="checkbox">Yes</label>-->
 	
 	</div>
+</div>
 	<footer class="footer">
 		<div class="container">
 			<p class="text-muted">
