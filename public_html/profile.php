@@ -93,8 +93,10 @@ $user = $all_games->fetch_assoc();
 							} else {
 								echo '<img src="http://ui.uniteddogs.com/img/ui/user_icons/_no_avatar_f_180x180.png" class="img-thumbnail">';
 							}
+							if (isset($_SESSION["id"]) && $id == $_SESSION["id"]) {
+                            	echo '<button id="uploadProfilePictureButton" class="btn btn-default" data-toggle="modal" data-target="#uploadProfilePicture" style="display: none;"> Change </button>';
+							}
 							?>
-                            <button id="uploadProfilePictureButton" class="btn btn-default" data-toggle="modal" data-target="#uploadProfilePicture" style="display: none;"> Change </button>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-8" style="height: 100%;;">
@@ -120,7 +122,11 @@ $user = $all_games->fetch_assoc();
                                         </p>
                                     </div>
                                     <div class="col-sm-1">
-                                        <button id="editBioButton" class="btn btn-default" data-toggle="modal" data-target="#editBio" style="display: none;"> Change </button>
+										<?php
+											if (isset($_SESSION["id"]) && $id == $_SESSION["id"]) {
+                                        		echo '<button id="editBioButton" class="btn btn-default" data-toggle="modal" data-target="#editBio" style="display: none;"> Change </button>';
+											}
+										?>
                                     </div>
                                 </div>
                             </div>

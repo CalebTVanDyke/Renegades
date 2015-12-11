@@ -1,5 +1,5 @@
 <?php
-
+// Sets the given game as featured in the database
 include_once ('../../resources/sqlconnect.php');
 
 $id = $_GET['id'];

@@ -1,5 +1,5 @@
 <?php
-
+// Adds the specified game to the database and saves the image into the correct folder
 include_once ('../../resources/sqlconnect.php');
 
 $sql = SqlConnect::getInstance();
