@@ -5,7 +5,7 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 <head>
-		<meta charset="utf-8">
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Renegades</title>
 	<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css">
@@ -30,6 +30,7 @@ session_start();
 			<li><a id="games" href="games.php">Games</a></li>
 			<li class="active"><a id="tournaments" href="tournaments.php">Tournaments</a></li>
 			<li><a id="leaderboards" href="leaderboards.php">Leaderboards</a></li>
+			<li><a id="calenderPage" href="calenderPage.php">Calender</a></li>
 			<?php 
 				if (isset($_SESSION["player_tag"]) && isset($_SESSION["id"])) {
 					echo '<li><a id="profile" href="profile.php">Profile</a></li>';
@@ -80,3 +81,4 @@ session_start();
 	</footer>
 </body>
 </html>
+

@@ -9,14 +9,15 @@ session_start();
 	<title>Renegades</title>
 	<link rel="stylesheet" type="text/css" media="all" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" media="all" href="css/main.css">
+	<link rel="stylesheet" type="text/css" media="all" href="css/sticky-footer.css">
+	
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 	
-	
-<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
-<script type="text/javascript" src="js/jquery.bracket.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css/jquery.bracket.min.css" />
+	<script type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.bracket.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery.bracket.min.css" />
 </head>
 <body>
 
@@ -45,7 +46,7 @@ session_start();
 		Title of tournament: <br><input type="text" name="title"><br>
 		<input type="radio" name="type" value="double" checked>Double Elimination<br>
 		<input type="radio" name="type" value="single">Single Elimination<br>
-		Max Entrants: <br><input type="number" name="entrants" max="64" min ="2"><br>
+		Max Entrants: <br><input type="number" name="entrants" max="64"><br>
 		Price for Entry: <br><input type="integer" name="price"><br>
 		Game: <br><input type="text" name="game"><br>
 		Date: <br><input type="date" name="date"><br>
@@ -58,6 +59,7 @@ session_start();
 	<label><input id="consolation" type="checkbox">Yes</label>-->
 	
 	</div>
+	
 </div>
 	<footer class="footer">
 		<div class="container">
@@ -74,3 +76,4 @@ session_start();
 	</footer>
 </body>
 </html>
+
