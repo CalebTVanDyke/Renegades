@@ -29,7 +29,7 @@ class authUtil {
 	 *        	string username
 	 * @param
 	 *        	salt user's salt
-	 *        	
+	 *
 	 */
 	public static function makePassHash($algo, $salt, $username, $password){
 		$hash = hash($algo, $salt . $username . $password);
@@ -59,7 +59,7 @@ class authUtil {
 	/**
 	 *
 	 * @return true if the hash password matches with the hash for the username and password
-	 *        
+	 *
 	 */
 	public static function verifyPass($algo, $hash, $salt, $username, $password){
 		$attempt = authUtil::makePassHash($algo, $salt, $username, $password);

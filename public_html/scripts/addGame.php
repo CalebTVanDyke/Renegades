@@ -1,5 +1,5 @@
 <?php
-
+// Adds the specified game to the database and saves the image into the correct folder
 include_once ('../../resources/sqlconnect.php');
 
 $sql = SqlConnect::getInstance();
@@ -8,6 +8,10 @@ $release = $_POST["releaseDate"];
 $description = $sql->escape($_POST["description"]);
 $genre = $sql->escape($_POST["genre"]);
 $maxPlayers = $_POST["maxPlayers"];
+if ($id == "" || $title == "" || $release == "" || $description == "" || $genre == "" || $maxPlayers == "" || $_FILES["image"]["name" == ""]) {
+    header('Location: ../games.php?game=' . $title . '&error=' . "Please fill in all fields in the form.");
+    die();
+}
 $fileName = basename($_FILES["image"]["name"]);
 
 $query = "INSERT INTO Game (name, genre, release_date, description, max_players, image_name) VALUES ('".$title."','".$genre."','".$release."','".$description."','".$maxPlayers."', '".$fileName."');";

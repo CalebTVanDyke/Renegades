@@ -58,7 +58,7 @@ var val = $('.tournament_id').val();
 		$id=$_GET["tournament_id"];
 		$sql = SqlConnect::getInstance();
 
-		$result = $sql->runQuery("SELECT bracket,name FROM Tournament WHERE tournament_id = '$id';");
+		$result = $sql->runQuery("SELECT bracket,name, FROM Tournament WHERE tournament_id = '$id';");
 
 		while ($row = $result->fetch_assoc()) {
 			$bracket = $row["bracket"];

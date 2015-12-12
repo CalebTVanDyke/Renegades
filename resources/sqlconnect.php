@@ -19,6 +19,9 @@ class SqlConnect {
 		$this->initialize();
 	}
 
+	/**
+	* Uses the singleton design patter to avoid multiple database connections
+	*/
 	public static function getInstance()
     {
         if (null === SqlConnect::$instance) {
@@ -55,10 +58,16 @@ class SqlConnect {
 		}
 	}
 
+	/**
+	* Runs the desired query on the database
+	*/
 	public function runQuery($query) {
 		return $this->connection->query($query);
 	}
 
+	/**
+	* Escapes the given string
+	*/
 	public function escape($str) {
 		SqlConnect::getInstance();
 		return mysqli_real_escape_string($this->connection, $str);
